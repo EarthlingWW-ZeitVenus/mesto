@@ -1,0 +1,10 @@
+.profile__profession {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  margin: 16px 0px 0px;
+}

@@ -1,0 +1,10 @@
+.profile__full-name {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 1.33;
+  margin: 18px 0px 0px;
+}
