@@ -18,4 +18,4 @@
 * Safari 10.1 ver.
 * Samsung Internet 6.2 ver.
 
- [Ссылка на опубликованный проект - Путешествия по России](https://earthlingww-zeitvenus.github.io/russian-travel/index.html)
+ [Ссылка на опубликованный проект - Mesto](https://earthlingww-zeitvenus.github.io/mesto/index.html)
