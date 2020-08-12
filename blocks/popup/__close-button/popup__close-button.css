@@ -6,7 +6,7 @@
   height: 40px;
   cursor: pointer;
   background-color: rgb(0, 0, 0, 0);
-  border: 1px solid red;
+  border: none;
 }
 
 .popup__close-button::before {
