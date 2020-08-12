@@ -22,7 +22,9 @@
 
     <!-- TODO:
     1. Не забыть оптимизировать картинки - и векторные, и растровые
-    2. Узнать как оформлять кнопки (может покопаться в теме про формы) -->
+    2. Не забыть задать минимальный и максимальные размеры страницы
+    3. Убрать границы вокруг крекстика, закрывающей кнопки
+    4. Между полями все-таки сделать маргин, а дальше пусть ревью поправляет как надо -->
 
       <section class="profile profile__top-margin">
         <div class="profile__info-area">
@@ -41,28 +43,31 @@
       <section class="elements elements__margins">
         <ul class="elements__list">
           <li class="element">
-            <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="">
-            <p class="element__text">Какой-то текст</p>
+            <img class="element__image" src="images/dolphins-282px.jpg" alt="">
+            <div class="element__text-container">
+              <p class="element__text">Дельфины</p>
+              <img class="element__icon" src="images/Group.svg" alt="">
+            </div>
           </li>
           <li class="element">
-            <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="">
-            <p class="element__text">Какой-то текст, длинный или не очень</p>
+            <img class="element__image" src="images/fish-hammer-282px.jpg" alt="">
+            <p class="element__text">Рыба молот</p>
           </li>
           <li class="element">
-            <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="">
-            <p class="element__text">Какой-то текст, длинный или не очень</p>
+            <img class="element__image" src="images/jelly-fish-282px.jpg" alt="">
+            <p class="element__text">Медузы</p>
           </li>
           <li class="element">
-            <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="">
-            <p class="element__text">Какой-то текст, длинный или не очень</p>
+            <img class="element__image" src="images/sea-turtle-282px.jpg" alt="">
+            <p class="element__text">Морская черепаха</p>
           </li>
           <li class="element">
-            <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="">
-            <p class="element__text">Какой-то текст, длинный или не очень</p>
+            <img class="element__image" src="images/shoreline-282px.jpg" alt="">
+            <p class="element__text">Береговая линия</p>
           </li>
           <li class="element">
-            <img class="element__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="">
-            <p class="element__text">Какой-то текст, длинный или не очень</p>
+            <img class="element__image" src="images/snorkel-trip-282px.jpg" alt="">
+            <p class="element__text">Косяк рыб</p>
           </li>
         </ul>
       </section>
@@ -74,6 +79,22 @@
     </footer>
 
   </div>
+
+  <div class="popup">
+    <div class="popup__container"> <!--Белая область, что отображается при всплытии-->
+     <button class="popup__close-button" type="button" aria-label="закрыть попап"></button>
+     <h3 class="popup__title">Редактировать профиль</h3>
+     <form class="popup__form">
+       <fieldset class="popup__form-container">
+         <input class="popup__full-name" name="full-name" type="text">
+         <input class="popup__profession" name="profession" type="text">
+       </fieldset>
+       <button class="popup__form-submit" type="submit">Сохранить</button>
+     </form>
+    </div>
+  </div>
+
+  <script src="scripts/main.js"></script>
 
 </body>
 

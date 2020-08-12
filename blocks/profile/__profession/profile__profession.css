@@ -6,5 +6,19 @@
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
-  margin: 16px 0px 0px;
+  margin: 10px 0px 0px;
+}
+
+@media screen and (max-width: 990px) {
+  .profile__profession {
+    text-align: center;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 358px) {
+  .profile__profession {
+    font-size: 14px;
+    line-height: 17px;
+  }
 }

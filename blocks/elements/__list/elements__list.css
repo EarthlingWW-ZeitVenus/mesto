@@ -8,3 +8,15 @@
   margin: 0;
   padding: 0;
 }
+
+@media screen and (min-width: 1590px) {
+  .elements__list {
+    margin: 0 100px;
+  }
+}
+
+@media screen and (max-width: 364px) {
+  .elements__list {
+    column-gap: 0px;
+  }
+}

@@ -1,3 +1,9 @@
 .header {
   min-height: 74px;
 }
+
+@media screen and (max-width: 395px) {
+  .header {
+    min-height: 56px;
+  }
+}
