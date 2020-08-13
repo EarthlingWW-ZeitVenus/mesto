@@ -1,9 +1,9 @@
 @font-face {
-    src: url("Inter-Regular.woff2?v=3.13") format("woff2"),
-         url("Inter-Regular.woff?v=3.13") format("woff");
-    font-family: 'Inter';
-    font-weight: normal;
- }
+  src: url("Inter-Regular.woff2?v=3.13") format("woff2"),
+       url("Inter-Regular.woff?v=3.13") format("woff");
+  font-family: 'Inter';
+  font-weight: normal;
+}
 
  /* @font-face {
     src: url("Inter-Bold.woff2?v=3.13") format("woff2"),
@@ -12,17 +12,17 @@
      font-weight: bold;
  } */
 
- @font-face {
-    src: url("Inter-Black.woff2?v=3.13") format("woff2"),
-         url("Inter-Black.woff?v=3.13") format("woff");
-    font-family: 'Inter';
-    font-weight: 900;
- }
+@font-face {
+  src: url("Inter-Black.woff2?v=3.13") format("woff2"),
+       url("Inter-Black.woff?v=3.13") format("woff");
+  font-family: 'Inter';
+  font-weight: 900;
+}
 
  /* weight: 500 */
- @font-face {
-     src: url("Inter-Medium.woff2?v=3.13") format("woff2"),
-     url("Inter-Medium.woff?v=3.13") format("woff");
-     font-family: 'Inter';
-     font-weight: 500;
- }
+@font-face {
+  src: url("Inter-Medium.woff2?v=3.13") format("woff2"),
+       url("Inter-Medium.woff?v=3.13") format("woff");
+  font-family: 'Inter';
+  font-weight: 500;
+}

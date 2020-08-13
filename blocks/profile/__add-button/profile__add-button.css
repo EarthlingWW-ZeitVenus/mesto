@@ -6,6 +6,7 @@
   cursor: pointer;
   transition: opacity .3s linear;
 }
+
 .profile__add-button::before {
   content: '';
   display: block;
@@ -29,5 +30,4 @@
   .profile__add-button::before {
     background-image: url(../../../images/AddButtonMobile.svg);
   }
-
 }
