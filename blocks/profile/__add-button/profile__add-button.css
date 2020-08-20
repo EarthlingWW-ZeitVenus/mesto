@@ -31,6 +31,8 @@
   }
 
   .profile__add-button::before {
-    background-image: url(../../../images/AddButtonMobile.svg);
+    height: 16px;
+    width: 16px;
+    background-size: contain;
   }
 }
