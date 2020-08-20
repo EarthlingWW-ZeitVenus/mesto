@@ -5,17 +5,20 @@
   position: relative;
   cursor: pointer;
   transition: opacity .3s linear;
+  border: 1px solid white;
+  box-sizing: border-box;
 }
 
 .profile__add-button::before {
   content: '';
   display: block;
-  background-image: url(../../../images/AddButton.svg);
+  background-image: url(../../../images/Plus.svg);
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 22px;
+  width: 22px;
 }
 
 .profile__add-button:hover {
