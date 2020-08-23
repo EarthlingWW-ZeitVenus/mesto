@@ -1,0 +1,13 @@
+.element__icon {
+  background-image: url(../../../images/Group.svg);
+  width: 20.76px;
+  height: 18.13px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity .3s linear;
+}
+
+.element__icon:hover {
+  opacity: .6;
+}

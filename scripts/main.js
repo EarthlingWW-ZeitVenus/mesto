@@ -1,41 +1,34 @@
-let Popup = document.querySelector('.popup');
-let ProfileEditButton = document.querySelector('.profile__edit-button');
-let PopupCloseButton = Popup.querySelector('.popup__close-button');
-let PopupFullName = Popup.querySelector('.popup__full-name');
-let PopupProfession = Popup.querySelector('.popup__profession');
-let PopupForm = Popup.querySelector('.popup__form');
-// let PopupSubmitButton = Popup.querySelector('.popup__form-submit');
-// submit на кнопку не работает, работает submit на форму
+let popup = document.querySelector('.popup');
+let profileEditButton = document.querySelector('.profile__edit-button');
+let popupCloseButton = popup.querySelector('.popup__close-button');
+let popupFullName = popup.querySelector('.popup__full-name');
+let popupProfession = popup.querySelector('.popup__profession');
+let popupForm = popup.querySelector('.popup__form');
+let docFullName = document.querySelector('.profile__full-name');
+let docProfession = document.querySelector('.profile__profession');
 
-PopupFullName.value = (document.querySelector('.profile__full-name')).textContent;
-PopupProfession.value = (document.querySelector('.profile__profession')).textContent;
-
-
-function PopupToggle() {
-  // console.log(event);
-  Popup.classList.toggle('popup_opened');
+function popupToggle() {
+  popup.classList.toggle('popup_opened');
+  if(popup.classList.contains('popup_opened')) {
+    popupFullName.value = docFullName.textContent;
+    popupProfession.value = docProfession.textContent;
+  }
 }
 
-function PopupClose (event) {
+function popupClose (event) {
   if (event.target !== event.currentTarget) return;
-  PopupToggle();
+    popupToggle();
 }
 
-function FormSubmitHandler (evt) {
-  // console.log('some text');
-  // console.log(evt);
+function formSubmitHandler (evt) {
   evt.preventDefault();
-  let DocFullName = document.querySelector('.profile__full-name');
-  let DocProfession = document.querySelector('.profile__profession');
-  DocFullName.textContent = PopupFullName.value;
-  DocProfession.textContent = PopupProfession.value;
-  // (document.querySelector('.profile__full-name')).textContent = PopupFullName.value;
-  // (document.querySelector('.profile__profession')).textContent = PopupProfession.value;
-  PopupToggle();
+  docFullName.textContent = popupFullName.value;
+  docProfession.textContent = popupProfession.value;
+  popupToggle();
   return;
 }
 
-ProfileEditButton.addEventListener('click', PopupToggle);
-PopupCloseButton.addEventListener('click', PopupToggle);
-Popup.addEventListener('click', PopupClose);
-PopupForm.addEventListener('submit', FormSubmitHandler);
+profileEditButton.addEventListener('click', popupToggle);
+popupCloseButton.addEventListener('click', popupToggle);
+popup.addEventListener('click', popupClose);
+popupForm.addEventListener('submit', formSubmitHandler);

@@ -10,72 +10,74 @@
 
 <body class="root">
 
-  <div class="page page__paddings page_color_black">
+  <div class="page page_content_paddings">
 
-    <header class="header header_block-align_center">
+    <header class="header header_align_center">
       <img class="logo" src="images/logo.svg" alt="логотип шапки сайта">
     </header>
 
-    <!-- <div class="line"></div> -->
+    <!-- Не забыть удалить папку ToDelete -->
 
     <main class="content">
       
-      <section class="profile profile_block-align_top-center">
+      <section class="profile profile_align_top-center">
         <div class="profile__info-area">
           <img class="profile__avatar" src="images/Avatar.jpg" alt="фотография лица мужчины, с красной шапочкой на голове">
           <div class="profile__info">
             <div class="profile__info-container">
               <h1 class="profile__full-name">Жак-Ив Кусто</h1>
-              <button class="profile__edit-button"></button>
+              <button class="profile__edit-button" type="button"></button>
             </div>
-            <p class="profile__profession">Исследователь океана</p> 
+            <p class="profile__profession">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
 
-      <section class="elements elements__margins">
+      <section class="elements elements_align_top-bottom">
         <ul class="elements__list">
           <li class="element">
             <img class="element__image" src="images/dolphins-282px.jpg" alt="два дельфина плывут по голубой воде">
             <div class="element__text-container">
               <h4 class="element__text">Дельфины</h4>
-              <img class="element__icon" src="images/Group.svg" alt="иконка для избранного в виде сердечка">
+              <!-- 1. Поменять img на button
+                   2. У button надо прописать высоту и ширину, т.к. иначе бэкгроунд рисунок не виден будет -->
+              <button class="element__icon" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="images/fish-hammer-282px.jpg" alt="рыба-молот, вид спереди, на глубине, под водой">
             <div class="element__text-container">
               <h4 class="element__text">Рыба молот</h4>
-              <img class="element__icon" src="images/Group.svg" alt="иконка для избранного в виде сердечка">
+              <button class="element__icon" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="images/jelly-fish-282px.jpg" alt="стая медуз под водой">
             <div class="element__text-container">
               <h4 class="element__text">Медузы</h4>
-              <img class="element__icon" src="images/Group.svg" alt="иконка для избранного в виде сердечка">
+              <button class="element__icon" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="images/sea-turtle-282px.jpg" alt="морская черепаха плывет под водой">
             <div class="element__text-container">
               <h4 class="element__text">Морская черепаха</h4>
-              <img class="element__icon" src="images/Group.svg" alt="иконка для избранного в виде сердечка">
+              <button class="element__icon" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="images/shoreline-282px.jpg" alt="береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы">
             <div class="element__text-container">
               <h4 class="element__text">Береговая линия</h4>
-              <img class="element__icon" src="images/Group.svg" alt="иконка для избранного в виде сердечка">
+              <button class="element__icon" type="button"></button>
             </div>
           </li>
           <li class="element">
             <img class="element__image" src="images/snorkel-trip-282px.jpg" alt="Стая акул плывет под водой">
             <div class="element__text-container">
               <h4 class="element__text">Стая акул</h4>
-              <img class="element__icon" src="images/Group.svg" alt="иконка для избранного в виде сердечка">
+              <button class="element__icon" type="button"></button>
             </div>
           </li>
         </ul>
@@ -83,7 +85,7 @@
 
     </main>
 
-    <footer class="footer">
+    <footer class="footer footer_align_center">
       <p class="footer__text">&copy; 2020 Mesto Russia</p>
     </footer>
 
@@ -93,10 +95,10 @@
     <div class="popup__container"> <!--Белая область, что отображается при всплытии-->
       <button class="popup__close-button" type="button" aria-label="закрыть попап"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form">
+      <form class="popup__form" name="profile-info">
         <fieldset class="popup__form-container">
-          <input class="popup__full-name" name="full-name" type="text">
-          <input class="popup__profession" name="profession" type="text">
+          <input class="popup__full-name" id="full-name" name="full-name" type="text">
+          <input class="popup__profession" id="profession" name="profession" type="text">
         </fieldset>
         <button class="popup__submit-button" type="submit">Сохранить</button>
       </form>

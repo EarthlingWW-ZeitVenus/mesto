@@ -1,15 +1,15 @@
-.page__paddings {
+.page_content_paddings {
   padding: 45px 199px 60px;
 }
 
 @media screen and (max-width: 734px) {
-  .page {
+  .page_content_paddings {
     padding: 45px 100px 60px;
   }
 }
 
 @media screen and (max-width: 585px) {
-  .page {
+  .page_content_paddings {
     padding: 28px 19px 36px;
   }
 }
