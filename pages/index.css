@@ -46,3 +46,5 @@
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__submit-button/popup__submit-button.css);
 @import url(../blocks/popup/__form-container/popup__form-container.css);
+@import url(../blocks/popup/__input/_field/popup__input_field_full-name.css);
+@import url(../blocks/popup/__input/_field/popup__input_field_profession.css);

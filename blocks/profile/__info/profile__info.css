@@ -10,9 +10,16 @@
   }
 }
 
-@media screen and (max-width: 395px) {
+/* @media screen and (max-width: 395px) {
   .profile__info {
     min-height: 66px;
     min-width: 280px;
   }
-}
+} */
+
+@media screen and (max-width: 580px) {
+  .profile__info {
+    min-height: 66px;
+    max-width: 282px;
+  }
+
