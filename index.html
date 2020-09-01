@@ -89,8 +89,8 @@
 
   </div>
 
-  <div class="popup">
-    <div class="popup__container"> <!--Белая область, что отображается при всплытии-->
+  <!-- <div class="popup">
+    <div class="popup__container">
       <button class="popup__close-button" type="button" aria-label="закрыть попап"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="popup__form" id="profile-info" name="profile-info">
@@ -101,11 +101,27 @@
         <button class="popup__submit-button" type="submit">Сохранить</button>
       </form>
     </div>
+  </div> -->
+  
+<div class="popup">
+  <div class="popup__container">
+    <button class="popup__close-button" type="button" aria-label="закрыть попап"></button>
+    <h3 class="popup__title"></h3>
+    <form class="popup__form">
+      <fieldset class="popup__form-container">
+        <input class="popup__input" type="text">
+        <input class="popup__input" type="text">
+      </fieldset>
+      <button class="popup__submit-button" type="submit">Сохранить</button>
+    </form>
   </div>
+</div>
+  
 
   <template id="template-element">
     <li class="element">
       <img class="element__image">
+      <button class="element__trash" type="button"></button>
       <div class="element__text-container">
         <h4 class="element__text"></h4>
         <button class="element__icon" type="button"></button>

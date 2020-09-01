@@ -2,7 +2,8 @@
   background-color: white;
   color: black;
   width: 282px;
-  min-height: 361px;
+  height: 361px;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
 }
