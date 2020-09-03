@@ -1,5 +1,6 @@
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
+const likeButton = document.querySelector('.profile__add-button');
 const docFullName = document.querySelector('.profile__full-name');
 const docProfession = document.querySelector('.profile__profession');
 const popup = document.querySelector('.popup');
@@ -102,6 +103,7 @@ const specializePopup = evt => {
 }
 
 function popupToggle(evt) {
+  console.log(evt.target.className);
   if(!popup.classList.contains('popup_opened'))
     specializePopup(evt);
   popup.classList.toggle('popup_opened');
