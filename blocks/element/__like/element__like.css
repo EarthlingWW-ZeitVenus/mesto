@@ -1,4 +1,4 @@
-.element__icon {
+.element__like {
   background-image: url(../../../images/Group.svg);
   width: 20.76px;
   height: 18.13px;
@@ -8,6 +8,10 @@
   transition: opacity .3s linear;
 }
 
-.element__icon:hover {
+.element__like:hover {
   opacity: .6;
+}
+
+.element__like:focus {
+  outline: none;
 }

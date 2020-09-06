@@ -31,8 +31,10 @@
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__text/element__text.css);
 @import url(../blocks/element/__text-container/element__text-container.css);
-@import url(../blocks/element/__icon/element__icon.css);
-@import url(../blocks/element/__trash/element__trash.css);
+@import url(../blocks/element/__like/element__like.css);
+@import url(../blocks/element/__delete/element__delete.css);
+@import url(../blocks/element/__like/_active/element__like_active.css);
+
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/_align/footer_align_center.css);
@@ -50,3 +52,10 @@
 @import url(../blocks/popup/__input/_field/popup__input_field_full-name.css);
 @import url(../blocks/popup/__input/_field/popup__input_field_profession.css);
 @import url(../blocks/popup/_functional/popup_functional_edit-profile.css);
+@import url(../blocks/popup/_functional/popup_functional_show-image.css);
+@import url(../blocks/popup/_functional/popup_functional_add-place.css);
+@import url(../blocks/popup/__image-figure/popup__image-figure.css);
+@import url(../blocks/popup/__image/popup__image.css);
+@import url(../blocks/popup/__caption/popup__caption.css);
+@import url(../blocks/popup/__container/_disabled/popup__container_disabled.css);
+@import url(../blocks/popup/__image-figure/_disabled/popup__image-figure_disabled.css);

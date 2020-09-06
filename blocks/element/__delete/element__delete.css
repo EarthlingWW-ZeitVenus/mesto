@@ -1,4 +1,4 @@
-.element__trash {
+.element__delete {
   width: 18px;
   height: 19.3px;
   background-image: url(../../../images/Trash.svg);
@@ -12,6 +12,6 @@
   transition: opacity .3s linear;
 }
 
-.element__trash:hover {
+.element__delete:hover {
   opacity: .6;
 }
