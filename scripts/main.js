@@ -157,11 +157,7 @@ function specializePopup(evt) {
     console.log(eventTargetElement);
     popupContainer.classList.add('popup__container_disabled');
     // popupContainer.remove();
-    popup.insertAdjacentHTML('afterbegin', `<figure class="popup__image-figure">
-                                              <button class="popup__close-button" type="button"></button>
-                                              <img class="popup__image">
-                                              <figcaption class="popup__caption"></figcaption>
-                                            </figure>`);
+    popup.insertAdjacentHTML('afterbegin', `<figure class='popup__image-figure'><button class='popup__close-button' type='button'></button><img class='popup__image'><figcaption class='popup__caption'></figcaption></figure>`);
     // popup.innerHTML = `<figure class="popup__image-figure">
                         // <button class="popup__close-button" type="button"></button>
                         // <img class="popup__image"></img>
@@ -172,6 +168,7 @@ function specializePopup(evt) {
     console.log(popup);
     popup.querySelector('.popup__image').setAttribute('src', eventTarget.src);
     popup.querySelector('.popup__caption').textContent = eventTargetElement.querySelector('.element__text').textContent;
+    popup.querySelector('.popup__caption').insertAdjacentText('afterend', `</img>`);
     console.log(popup.querySelector('.popup__image').src);
     console.log(popup.querySelector('.popup__caption').textContent);
     popupToggle();
@@ -212,6 +209,7 @@ function popupToggle() {
       // console.log(popup);
     // }
     // popupForm.reset();
+  console.log('Перед завершением функции этот код ниже, работает?');
   console.log(popup.classList);
 }
 
@@ -232,21 +230,23 @@ function makeAllToInitialState() {
     }
     else if(caseShowImage) {
       console.log('Убедись что попап содержит класс popup_functional_show-image');
-      console.log(popup);
+      console.log(popup.classList);
       popup.classList.remove('popup_functional_show-image');
       caseShowImage = popup.classList.contains('popup_functional_show-image');
+      console.log(caseShowImage);
       console.log('Убедись что попап НЕ содержит класс popup_functional_show-image');
-      console.log(popup);
+      console.log(popup.classList);
       console.log('Убедись что рядом с попап контейнер стоит класс popup__image-figure');
-      console.log(popup);
-      // console.log(popup.querySelector('.popup__image-figure'));
+      console.log(popup.querySelector('.popup__image-figure'));
       popup.querySelector('.popup__image-figure').remove();
       console.log('Убедись что класса popup__image-figure больше нет');
+      console.log(popup.querySelector('.popup__image-figure'));
       console.log(popup);
       console.log('Убедись что попап контейнер содержит класс popup__container_disabled');
+      console.log(popupContainer.classList);
       popupContainer.classList.remove('popup__container_disabled');
       console.log('look popup - popup__container_disabled removed?');
-      console.log(popup);
+      console.log(popupContainer.classList);
     }
     popupForm.reset();
   }
