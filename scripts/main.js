@@ -168,7 +168,7 @@ function specializePopup(evt) {
     console.log(popup);
     popup.querySelector('.popup__image').setAttribute('src', eventTarget.src);
     popup.querySelector('.popup__caption').textContent = eventTargetElement.querySelector('.element__text').textContent;
-    popup.querySelector('.popup__caption').insertAdjacentText('afterend', `</img>`);
+    // popup.querySelector('.popup__caption').insertAdjacentText('afterend', `</img>`);
     console.log(popup.querySelector('.popup__image').src);
     console.log(popup.querySelector('.popup__caption').textContent);
     popupToggle();
