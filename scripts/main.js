@@ -1,3 +1,10 @@
+//ToDo: Ужать картинки
+//ToDo: Удалить лишние модификаторы, оставить только те, что используются
+//ToDo: Удалить из index.css лишние ссылки
+//ToDo: Для Recview сделать комментарии
+//ToDo: Поудалять излишние console.log, остальные заккоментировать
+//ToDo: Чеклист
+
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 // ToReview: шаблонный элемент "нашел" дважды (в глобальной области видимсости и в функции addElementsToContainer)
@@ -10,38 +17,45 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const docFullName = document.querySelector('.profile__full-name');
 const docProfession = document.querySelector('.profile__profession');
 const popup = document.querySelector('.popup');
-const popupCloseButton = popup.querySelector('.popup__close-button');
-const popupForm = popup.querySelector('.popup__form');
-const popupTitle = popup.querySelector('.popup__title');
-const popupFirstInput = popup.querySelector('.popup__input:nth-child(1)');
-const popupSecondInput = popup.querySelector('.popup__input:nth-child(2)');
 const popupContainer = popup.querySelector('.popup__container');
+// const popupContainerNode = popupContainer.cloneNode(true);
+// console.log(popupContainerNode);
+const popupCloseButton = popup.querySelector('.popup__close-button');
+console.log(popupCloseButton);
+const popupForm = popup.querySelector('.popup__form');
+console.log(popupForm);
+const popupTitle = popup.querySelector('.popup__title');
+console.log(popupTitle);
+const popupFirstInput = popup.querySelector('.popup__input:nth-child(1)');
+console.log(popupFirstInput);
+const popupSecondInput = popup.querySelector('.popup__input:nth-child(2)');
+console.log(popupSecondInput);
 // это надо перенести - const popupFullName = popup.querySelector('#full-name');
 // это надо перенести - const popupProfession = popup.querySelector('#profession');
 const elementsArr = [
   {
       name: 'Дельфины',
-      link: 'images/dolphins-282px.jpg'
+      link: 'images/Dolphins.jpg'
   },
   {
       name: 'Рыба молот',
-      link: 'images/fish-hammer-282px.jpg'
+      link: 'images/Hammerhead-fish.jpg'
   },
   {
       name: 'Медузы',
-      link: 'images/jelly-fish-282px.jpg'
+      link: 'images/Jelly-fish.jpg'
   },
   {
       name: 'Морская черепаха',
-      link: 'images/sea-turtle-282px.jpg'
+      link: 'images/Sea-turtle.jpg'
   },
   {
       name: 'Береговая линия',
-      link: 'images/shoreline-282px.jpg'
+      link: 'images/Shoreline.jpg'
   },
   {
       name: 'Стая акул',
-      link: 'images/snorkel-trip-282px.jpg'
+      link: 'images/Snorkel-trip.jpg'
   }
 ];
 const elementsListContainer = document.querySelector('.elements__list');
@@ -55,8 +69,10 @@ let casePopupOpened = false;
 // let casePopupOpened = popup.classList.contains('popup_opened');
 let caseShowImage = false;
 // let casePicture = popup.classList.contains('popup_functional_picture');
-// const popupContainerBackup = popupContainer.cloneNode(true);
-// console.log(popupContainerBackup);
+// console.log(popupContainer);
+// console.log(popupContainer.content);
+// const popupContainerContent = popupContainer.content.cloneNode(true);
+// console.log(popupContainerContent);
 
 
 // const elementTitle = listElement.querySelector('.element__text');
@@ -124,6 +140,7 @@ function specializePopup(evt) {
     popupSecondInput.classList.add('popup__input_field_profession');
     popupToggle();
     if(casePopupOpened) {
+      console.log('Провенряем что попали сюда - редактирование профиля');
       popupFirstInput.value = docFullName.textContent;
       popupSecondInput.value = docProfession.textContent;
     }
@@ -157,14 +174,22 @@ function specializePopup(evt) {
     console.log(eventTargetElement);
     popupContainer.classList.add('popup__container_disabled');
     // popupContainer.remove();
-    popup.insertAdjacentHTML('afterbegin', `<figure class='popup__image-figure'><button class='popup__close-button' type='button'></button><img class='popup__image'><figcaption class='popup__caption'></figcaption></figure>`);
+    // popupTitle.classList.add('popup__title_disabled');
+    // popupTitle.remove();
+    // popupForm.classList.add('popup__form_disabled');
+    // popupForm.remove();
+
+    popup.insertAdjacentHTML('afterbegin', `<figure class='popup__image-figure'><img class='popup__image'><figcaption class='popup__caption'></figcaption></figure>`);
     // popup.innerHTML = `<figure class="popup__image-figure">
                         // <button class="popup__close-button" type="button"></button>
                         // <img class="popup__image"></img>
                         // <figcaption class="popup__caption"></figcaption>
                       // </figure>`;
-    popup.querySelector('.popup__close-button').classList.add('popup__close-button_theme_for-image');
-    console.log('Внимательно посмотри на четвертый попап ниже');
+    // popup.querySelector('.popup__close-button').classList.add('popup__close-button_theme_for-image');
+    popup.querySelector('.popup__image-figure').prepend(popupCloseButton);
+    // popupContainer.classList.add('popup__container_theme_image');
+
+    console.log('Попап ниже должен содержать внутри себя класс popup__image-figure а кнопка popupCloseButton перемещена из Попап контейнера в попап фигуре имадж');
     console.log(popup);
     popup.querySelector('.popup__image').setAttribute('src', eventTarget.src);
     popup.querySelector('.popup__caption').textContent = eventTargetElement.querySelector('.element__text').textContent;
@@ -187,8 +212,9 @@ function popupToggle() {
     // popupSecondInput.value = docProfession.textContent;
     // popup.classList.toggle('popup_functional_edit-profile');
     // return;
-  setTimeout(makeAllToInitialState, 1000);  
-  // if(!casePopupOpened) {
+  
+  if(!casePopupOpened)
+    setTimeout(makeAllToInitialState, 1000);
   //   if(caseEditProfile) {
   //     popup.classList.remove('popup_functional_edit-profile');
   //     caseEditProfile = popup.classList.contains('popup_functional_edit-profile');
@@ -209,7 +235,7 @@ function popupToggle() {
       // console.log(popup);
     // }
     // popupForm.reset();
-  console.log('Перед завершением функции этот код ниже, работает?');
+  console.log('Перед завершением функции toggle этот код ниже, работает?');
   console.log(popup.classList);
 }
 
@@ -219,18 +245,24 @@ function popupClose (evt) {
 }
 
 function makeAllToInitialState() {
+  console.log('Убедимся что попали в функцию сброса в исходное состояния');
   if(!casePopupOpened) {
     if(caseEditProfile) {
+      console.log('Убедимся что попали в случай сброса класса - редактирование профиля');
       popup.classList.remove('popup_functional_edit-profile');
       caseEditProfile = popup.classList.contains('popup_functional_edit-profile');
     }
     else if(caseAddPlace) {
+      console.log('Убедимся что попали в случай сброса класса - добавление места');
       popup.classList.remove('popup_functional_add-place');
       caseAddPlace = popup.classList.contains('popup_functional_add-place');
     }
     else if(caseShowImage) {
       console.log('Убедись что попап содержит класс popup_functional_show-image');
       console.log(popup.classList);
+      console.log('Убедись что кнопка закрытия попап вернулась обратно в контейнер');
+      popupContainer.prepend(popupCloseButton);
+      console.log(popupContainer);
       popup.classList.remove('popup_functional_show-image');
       caseShowImage = popup.classList.contains('popup_functional_show-image');
       console.log(caseShowImage);
@@ -249,6 +281,9 @@ function makeAllToInitialState() {
       console.log(popupContainer.classList);
     }
     popupForm.reset();
+    console.log('Убедимся что попап ниже, возвращен в исходное состояние и не содержит лишних классов');
+    console.log(popup);
+    console.log(popup.classList);
   }
 }
 

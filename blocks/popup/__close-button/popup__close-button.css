@@ -31,6 +31,10 @@
   opacity: .6;
 }
 
+.popup__close-button:focus {
+  outline: none;
+}
+
 /* .popup__close-button::before {
   content: '';
   display: block;
