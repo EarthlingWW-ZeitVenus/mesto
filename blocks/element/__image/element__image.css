@@ -2,5 +2,6 @@
   object-fit: cover;
   object-position: center;
   height: 282px;
+  width: 282px;
   cursor: pointer;
 }
