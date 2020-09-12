@@ -3,7 +3,7 @@
 //ToDo: Удалить из index.css лишние ссылки +
 //ToDo: Для Review сделать комментарии о назначении функций +
 //ToDo: Поудалять излишние console.log, остальные заккоментировать +
-//ToDo: Чеклист
+//ToDo: Чеклист - Жесть... Надо было посмотреть его вначале...
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
