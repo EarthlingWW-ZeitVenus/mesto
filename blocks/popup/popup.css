@@ -1,5 +1,5 @@
 .popup {
-  display: none;
+  /* display: none; */
   position: fixed;
   height: 100%;
   width: 100%;
@@ -12,7 +12,7 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility 1s, opacity .7s linear;
-  display: flex;
+  /* display: flex; */
 }
 
 /* .popup:hover { */
