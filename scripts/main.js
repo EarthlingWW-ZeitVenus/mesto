@@ -71,25 +71,6 @@ const addElementsToContainer = elementObject => {
 elementsArr.forEach(addElementsToContainer);
 
 
-//Производит все необходимые действия и присваивания значений после открытия попап
-function preparePopup(targetPopup) {
-  console.log(targetElement);
-  switch(true) {
-    case(caseEditProfile):
-      targetPopup.querySelector('.popup__input_field_full-name').value = docFullName.textContent;
-      targetPopup.querySelector('.popup__input_field_profession').value = docProfession.textContent;
-      break;
-    case(caseAddPlace):
-      targetPopup.querySelector('.popup__input_field_place-title').setAttribute('placeholder', 'Название');
-      targetPopup.querySelector('.popup__input_field_link-to-image').setAttribute('placeholder', 'Ссылка на картинку');
-      break;
-    case(caseShowImage):
-      targetPopup.querySelector('.popup__image').setAttribute('src', targetImage.src);
-      targetPopup.querySelector('.popup__caption').textContent = targetElement.querySelector('.element__text').textContent;
-  }
-}
-
-
 //Сброс всех условий и переменных в начальное состояние
 function makeAllToInitialState() {
   if(!casePopupOpened) {
@@ -106,45 +87,59 @@ function makeAllToInitialState() {
 
 
 //Закрытие и открытие текущего всплывающего окна
-function popupToggle(targetPopup) {
+function togglePopup(targetPopup) {
   targetPopup.classList.toggle('popup_opened');
   casePopupOpened = targetPopup.classList.contains('popup_opened');
-  if(casePopupOpened)
-    preparePopup(targetPopup);
-  else
+  if(!casePopupOpened)
     setTimeout(makeAllToInitialState, 1000);
+}
+
+
+//Производит все необходимые действия и присваивания значений до открытия всплывающего окна
+function preparePopup(targetPopup) {
+  switch(true) {
+    case(caseEditProfile):
+      targetPopup.querySelector('.popup__input_field_full-name').value = docFullName.textContent;
+      targetPopup.querySelector('.popup__input_field_profession').value = docProfession.textContent;
+      break;
+    case(caseAddPlace):
+      targetPopup.querySelector('.popup__input_field_place-title').setAttribute('placeholder', 'Название');
+      targetPopup.querySelector('.popup__input_field_link-to-image').setAttribute('placeholder', 'Ссылка на картинку');
+      break;
+    case(caseShowImage):
+      targetPopup.querySelector('.popup__image').setAttribute('src', targetImage.src);
+      targetPopup.querySelector('.popup__caption').textContent = targetElement.querySelector('.element__text').textContent;
+  }
+  togglePopup(targetPopup);
 }
 
 
 //Определяет какой кокретно попап будет открываться
 function definePopup() {
-  let targetPopup = undefined;
   switch(true) {
     case(caseEditProfile):
       targetPopup = document.querySelector('.popup_theme_profile');
-      popupToggle(targetPopup);
       break;
     case(caseAddPlace):
       targetPopup = document.querySelector('.popup_theme_place');
-      popupToggle(targetPopup);
       break;
     case(caseShowImage):
       targetPopup = document.querySelector('.popup_theme_image');
-      popupToggle(targetPopup);
   }
+  preparePopup(targetPopup);
 }
 
 
 //Закрытия всплывающего окна по клику вне области окна
-function popupClose (evt) {
+function closePopup (evt) {
   if(evt.target !== evt.currentTarget) return;
   targetPopup = evt.currentTarget;
-  popupToggle(targetPopup);
+  togglePopup(targetPopup);
 }
 
 
 //Производит действия при нажатии на кнопку "Сохранить"
-function formSubmitHandler (evt) {
+function submitHandler (evt) {
   evt.preventDefault();
   if(caseEditProfile) {
     docFullName.textContent = popupProfileForm.querySelector('.popup__input_field_full-name').value;
@@ -159,7 +154,7 @@ function formSubmitHandler (evt) {
     addElementsToContainer(elementObject);
     targetPopup = popupPlace;
   }
-  popupToggle(targetPopup);
+  togglePopup(targetPopup);
   return;
 }
 
@@ -184,7 +179,7 @@ document.addEventListener('click', evt => {
       break;
     case 'popup__close-button' :
       targetPopup = evt.target.closest('.popup');
-      popupToggle(targetPopup);
+      togglePopup(targetPopup);
       break;
     case 'element__image' :
       caseShowImage = evt.target.classList.contains('element__image');
@@ -195,8 +190,8 @@ document.addEventListener('click', evt => {
 })
 
 
-popupProfile.addEventListener('click', popupClose);
-popupPlace.addEventListener('click', popupClose);
-popupImage.addEventListener('click', popupClose);
-popupProfileForm.addEventListener('submit', formSubmitHandler);
-popupPlaceForm.addEventListener('submit', formSubmitHandler);
+popupProfile.addEventListener('click', closePopup);
+popupPlace.addEventListener('click', closePopup);
+popupImage.addEventListener('click', closePopup);
+popupProfileForm.addEventListener('submit', submitHandler);
+popupPlaceForm.addEventListener('submit', submitHandler);
