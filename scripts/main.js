@@ -4,7 +4,7 @@
 //ToDo: Для Review сделать комментарии о назначении функций +
 //ToDo: Поудалять излишние console.log, остальные заккоментировать +
 //ToDo: Поудалять излишние объявленные переменные, которые нигде не используются +
-//ToDo: Чеклист - Жесть... Надо было посмотреть его вначале...
+//ToDo: Чеклист +
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
