@@ -5,6 +5,8 @@
 //ToDo: Поудалять излишние console.log, остальные заккоментировать +
 //ToDo: Поудалять излишние объявленные переменные, которые нигде не используются +
 //ToDo: Чеклист +
+//ToDo: Проверить, что поиск элементов не повторяется +
+//ToDo: Проверить, что объявления функций происходит до обращения к ним +
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -12,16 +14,21 @@ const docFullName = document.querySelector('.profile__full-name');
 const docProfession = document.querySelector('.profile__profession');
 const popupProfile = document.querySelector('.popup_theme_profile');
 const popupPlace = document.querySelector('.popup_theme_place');
-const popupImage = document.querySelector('.popup_theme_image');
+const popupElement = document.querySelector('.popup_theme_image');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
 const popupPlaceForm = popupPlace.querySelector('.popup__form');
+const popupProfileFormFullName = popupProfileForm.querySelector('.popup__input_field_full-name');
+const popupProfileFormProfession = popupProfileForm.querySelector('.popup__input_field_profession');
+const popupPlaceFormTitle = popupPlaceForm.querySelector('.popup__input_field_place-title');
+const popupPlaceFormLinkToImage = popupPlaceForm.querySelector('.popup__input_field_link-to-image');
+const popupProfileCloseButton = popupProfile.querySelector('.popup__close-button');
+const popupPlaceCloseButton = popupPlace.querySelector('.popup__close-button');
+const popupElementImage = popupElement.querySelector('.popup__image');
+const popupElementCaption = popupElement.querySelector('.popup__caption');
+const popupElementImageCloseButton = popupElement.querySelector('.popup__close-button');
+const elementsListContainer = document.querySelector('.elements__list');
 
-//Переменные для указания в функциях какой конретно попап или элемент сейчас используется
-let targetImage = undefined;
-let targetElement = undefined;
-let targetPopup = undefined;
-
-const elementsArr = [
+const objectsArr = [
   {
       name: 'Дельфины',
       link: 'images/Dolphins.jpg'
@@ -47,39 +54,69 @@ const elementsArr = [
       link: 'images/Snorkel-trip.jpg'
   }
 ];
-const elementsListContainer = document.querySelector('.elements__list');
+
 
 // Для проверки условий и выполнения условных ветвлений в функциях
-let caseEditProfile = false;
-let caseAddPlace = false;
 let casePopupOpened = false;
-let caseShowImage = false;
+let makeElementCounter = 0;
 
 
-// Добавление элементов в контейнер (либо в конце списка элементов, либо в начале)
-const addElementsToContainer = elementObject => {
+//Для создания элемента-карточки с нужными атрибутами
+function makeElement(elementObject) {
   const listElement = document.querySelector('#template-element').content.cloneNode(true);
+  elementImageButton = listElement.querySelector('.element__image');
   listElement.querySelector('.element__text').textContent = elementObject.name;
-  listElement.querySelector('.element__image').setAttribute('src', elementObject.link);
-  if(caseAddPlace) {
-    elementsListContainer.prepend(listElement);
+  if (makeElementCounter < 6) {
+    switch(elementObject.name) {
+      case('Дельфины'):
+        elementImageButton.alt = 'два дельфина плывут по голубой воде';
+        break;
+      case('Рыба молот'):
+        elementImageButton.alt = 'рыба-молот, вид спереди, на глубине, под водой';
+        break;
+      case('Медузы'):
+        elementImageButton.alt = 'стая медуз под водой';
+        break;
+      case('Морская черепаха'):
+        elementImageButton.alt = 'морская черепаха плывет под водой';
+        break;
+      case('Береговая линия'):
+        elementImageButton.alt = 'береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы';
+        break;
+      case('Стая акул'):
+        elementImageButton.alt = 'Стая акул плывет под водой';
+    };
   }
-  elementsListContainer.append(listElement);
+  elementImageButton.setAttribute('src', elementObject.link);
+  elementLikeButton = listElement.querySelector('.element__like');
+  elementDeleteButton = listElement.querySelector('.element__delete');
+  elementLikeButton.addEventListener('click', handleLikeStatus);
+  elementDeleteButton.addEventListener('click', handleDeleteElement);
+  elementImageButton.addEventListener('click', handleOpenImage);
+  makeElementCounter += 1;
+  return listElement;
 }
 
 
-elementsArr.forEach(addElementsToContainer);
+//Создание массива элеметов-карточек с нужными атрибутами
+const elementsArr = objectsArr.map(makeElement);
 
 
-//Сброс всех условий и переменных в начальное состояние
+//Добавление всех элементов-карточек из массива в DOM
+elementsArr.forEach(arrItem => {
+  elementsListContainer.append(arrItem);
+});
+
+
+//Добавление нового элемента-карточки
+const addElement = newElement => {
+  elementsListContainer.prepend(newElement);
+};
+
+
+// Сброс всех условий и переменных в начальное состояние
 function makeAllToInitialState() {
   if(!casePopupOpened) {
-    caseEditProfile = false;
-    caseAddPlace = false;
-    caseShowImage = false;
-    targetImage = undefined;
-    targetElement = undefined;
-    targetPopup = undefined;
     popupProfileForm.reset();
     popupPlaceForm.reset();
   }
@@ -95,103 +132,101 @@ function togglePopup(targetPopup) {
 }
 
 
-//Производит все необходимые действия и присваивания значений до открытия всплывающего окна
-function preparePopup(targetPopup) {
-  switch(true) {
-    case(caseEditProfile):
-      targetPopup.querySelector('.popup__input_field_full-name').value = docFullName.textContent;
-      targetPopup.querySelector('.popup__input_field_profession').value = docProfession.textContent;
-      break;
-    case(caseAddPlace):
-      targetPopup.querySelector('.popup__input_field_place-title').setAttribute('placeholder', 'Название');
-      targetPopup.querySelector('.popup__input_field_link-to-image').setAttribute('placeholder', 'Ссылка на картинку');
-      break;
-    case(caseShowImage):
-      targetPopup.querySelector('.popup__image').setAttribute('src', targetImage.src);
-      targetPopup.querySelector('.popup__caption').textContent = targetElement.querySelector('.element__text').textContent;
-  }
-  togglePopup(targetPopup);
-}
-
-
-//Определяет какой кокретно попап будет открываться
-function definePopup() {
-  switch(true) {
-    case(caseEditProfile):
-      targetPopup = document.querySelector('.popup_theme_profile');
-      break;
-    case(caseAddPlace):
-      targetPopup = document.querySelector('.popup_theme_place');
-      break;
-    case(caseShowImage):
-      targetPopup = document.querySelector('.popup_theme_image');
-  }
-  preparePopup(targetPopup);
-}
-
-
 //Закрытия всплывающего окна по клику вне области окна
 function closePopup (evt) {
   if(evt.target !== evt.currentTarget) return;
-  targetPopup = evt.currentTarget;
+  let targetPopup = evt.currentTarget;
   togglePopup(targetPopup);
 }
 
 
-//Производит действия при нажатии на кнопку "Сохранить"
-function submitHandler (evt) {
+//Действия при нажатии на кнопку "Сохранить" (Редактирование профиля)
+function submitEditProfile(evt) {
   evt.preventDefault();
-  if(caseEditProfile) {
-    docFullName.textContent = popupProfileForm.querySelector('.popup__input_field_full-name').value;
-    docProfession.textContent = popupProfileForm.querySelector('.popup__input_field_profession').value;
-    targetPopup = popupProfile;
-  }
-  else if(caseAddPlace) {
-    let elementObject = {
-      name: String(popupPlaceForm.querySelector('.popup__input_field_place-title').value),
-      link: String(popupPlaceForm.querySelector('.popup__input_field_link-to-image').value),
-    }
-    addElementsToContainer(elementObject);
-    targetPopup = popupPlace;
-  }
-  togglePopup(targetPopup);
-  return;
+  docFullName.textContent = popupProfileFormFullName.value;
+  docProfession.textContent = popupProfileFormProfession.value;
+  togglePopup(popupProfile);
 }
 
 
-//Проверяет какой элемент нажат на странице и в зависимости от этого выполняет соответсвующие действия
-document.addEventListener('click', evt => {
-  switch(evt.target.classList[0]) {
-    case 'profile__edit-button' :
-      caseEditProfile = evt.target.classList.contains('profile__edit-button');
-      definePopup();
-      break;
-    case 'profile__add-button' :
-      caseAddPlace = evt.target.classList.contains('profile__add-button');
-      console.log(caseAddPlace);
-      definePopup();
-      break;
-    case 'element__like' :
-      evt.target.classList.toggle('element__like_active');
-      break;
-    case 'element__delete' :
-      evt.target.closest('.element').remove();
-      break;
-    case 'popup__close-button' :
-      targetPopup = evt.target.closest('.popup');
-      togglePopup(targetPopup);
-      break;
-    case 'element__image' :
-      caseShowImage = evt.target.classList.contains('element__image');
-      targetImage = evt.target;
-      targetElement = evt.target.closest('.element');
-      definePopup();
-  };
-})
+//Действия при нажатии на кнопку "Сохранить" (Добавление места)
+function submitAddPlace(evt) {
+  evt.preventDefault();
+  let elementObject = {
+    name: String(popupPlaceFormTitle.value),
+    link: String(popupPlaceFormLinkToImage.value),
+  }
+  let newElement = makeElement(elementObject);
+  addElement(newElement);
+  togglePopup(popupPlace);
+}
 
 
+//Удаление элемента-карточки
+function handleDeleteElement(evt) {
+  evt.target.closest('.element').remove();
+}
+
+
+//Поставить "лайк"
+function handleLikeStatus(evt) {
+  evt.target.classList.toggle('element__like_active');
+}
+
+
+//Действия при нажатии на кнопку "Изменить" (Профиль)
+function handleEditProfile () {
+  popupProfileFormFullName.value = docFullName.textContent;
+  popupProfileFormProfession.value = docProfession.textContent;
+  togglePopup(popupProfile);
+}
+
+
+//Действия при нажатии на кнопку "Добавить" (Место)
+function handleAddPlace () {
+  // console.log('Проверяем, что я попал в функцию-обработчик добавления "места"');
+  // caseAddPlace = evt.target.classList.contains('profile__add-button');
+  // popupPlaceFormTitle.setAttribute('placeholder', 'Название');
+  // popupPlaceFormLinkToImage.setAttribute('placeholder', 'Ссылка на картинку');
+  togglePopup(popupPlace);
+}
+
+
+//Действия при нажатии на картинку карточки
+function handleOpenImage (evt) {
+  let targetImage = evt.target;
+  let targetElement = evt.target.closest('.element');
+  popupElementImage.setAttribute('src', targetImage.src);
+  popupElementCaption.textContent = targetElement.querySelector('.element__text').textContent;
+  togglePopup(popupElement);
+}
+
+
+//Закрытие попап при клике на крестик (Профиль)
+function handleCloseProfile() {
+  togglePopup(popupProfile);
+}
+
+
+//Закрытие попап при клике на крестик (Место)
+function handleClosePlace() {
+  togglePopup(popupPlace);
+}
+
+
+//Закрытие попап при клике на крестик (Картинка)
+function handleCloseImage() {
+  togglePopup(popupElement);
+}
+
+
+profileEditButton.addEventListener('click', handleEditProfile);
+profileAddButton.addEventListener('click', handleAddPlace);
+popupProfileCloseButton.addEventListener('click', handleCloseProfile);
+popupPlaceCloseButton.addEventListener('click', handleClosePlace);
+popupElementImageCloseButton.addEventListener('click', handleCloseImage);
 popupProfile.addEventListener('click', closePopup);
 popupPlace.addEventListener('click', closePopup);
-popupImage.addEventListener('click', closePopup);
-popupProfileForm.addEventListener('submit', submitHandler);
-popupPlaceForm.addEventListener('submit', submitHandler);
+popupElement.addEventListener('click', closePopup);
+popupProfileForm.addEventListener('submit', submitEditProfile);
+popupPlaceForm.addEventListener('submit', submitAddPlace);
