@@ -64,41 +64,44 @@ let makeElementCounter = 0;
 //Для создания элемента-карточки с нужными атрибутами
 function makeElement(elementObject) {
   const listElement = document.querySelector('#template-element').content.cloneNode(true);
-  elementImageButton = listElement.querySelector('.element__image');
+  elementImage = listElement.querySelector('.element__image');
   listElement.querySelector('.element__text').textContent = elementObject.name;
   if (makeElementCounter < 6) {
     switch(elementObject.name) {
       case('Дельфины'):
-        elementImageButton.alt = 'два дельфина плывут по голубой воде';
+        elementImage.alt = 'два дельфина плывут по голубой воде';
         break;
       case('Рыба молот'):
-        elementImageButton.alt = 'рыба-молот, вид спереди, на глубине, под водой';
+        elementImage.alt = 'рыба-молот, вид спереди, на глубине, под водой';
         break;
       case('Медузы'):
-        elementImageButton.alt = 'стая медуз под водой';
+        elementImage.alt = 'стая медуз под водой';
         break;
       case('Морская черепаха'):
-        elementImageButton.alt = 'морская черепаха плывет под водой';
+        elementImage.alt = 'морская черепаха плывет под водой';
         break;
       case('Береговая линия'):
-        elementImageButton.alt = 'береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы';
+        elementImage.alt = 'береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы';
         break;
       case('Стая акул'):
-        elementImageButton.alt = 'Стая акул плывет под водой';
+        elementImage.alt = 'Стая акул плывет под водой';
     };
   }
-  elementImageButton.setAttribute('src', elementObject.link);
+  else {
+    elementImage.alt = elementObject.name;
+  };
+  elementImage.setAttribute('src', elementObject.link);
   elementLikeButton = listElement.querySelector('.element__like');
   elementDeleteButton = listElement.querySelector('.element__delete');
   elementLikeButton.addEventListener('click', handleLikeStatus);
   elementDeleteButton.addEventListener('click', handleDeleteElement);
-  elementImageButton.addEventListener('click', handleOpenImage);
+  elementImage.addEventListener('click', handleOpenImage);
   makeElementCounter += 1;
   return listElement;
 }
 
 
-//Создание массива элеметов-карточек с нужными атрибутами
+//Создание массива элеметов-карточек
 const elementsArr = objectsArr.map(makeElement);
 
 
@@ -114,7 +117,7 @@ const addElement = newElement => {
 };
 
 
-// Сброс всех условий и переменных в начальное состояние
+// Сброс форм в начальное состояние
 function makeAllToInitialState() {
   if(!casePopupOpened) {
     popupProfileForm.reset();
@@ -135,8 +138,7 @@ function togglePopup(targetPopup) {
 //Закрытия всплывающего окна по клику вне области окна
 function closePopup (evt) {
   if(evt.target !== evt.currentTarget) return;
-  let targetPopup = evt.currentTarget;
-  togglePopup(targetPopup);
+  togglePopup(evt.currentTarget);
 }
 
 
@@ -152,11 +154,11 @@ function submitEditProfile(evt) {
 //Действия при нажатии на кнопку "Сохранить" (Добавление места)
 function submitAddPlace(evt) {
   evt.preventDefault();
-  let elementObject = {
+  const elementObject = {
     name: String(popupPlaceFormTitle.value),
     link: String(popupPlaceFormLinkToImage.value),
   }
-  let newElement = makeElement(elementObject);
+  const newElement = makeElement(elementObject);
   addElement(newElement);
   togglePopup(popupPlace);
 }
@@ -184,18 +186,14 @@ function handleEditProfile () {
 
 //Действия при нажатии на кнопку "Добавить" (Место)
 function handleAddPlace () {
-  // console.log('Проверяем, что я попал в функцию-обработчик добавления "места"');
-  // caseAddPlace = evt.target.classList.contains('profile__add-button');
-  // popupPlaceFormTitle.setAttribute('placeholder', 'Название');
-  // popupPlaceFormLinkToImage.setAttribute('placeholder', 'Ссылка на картинку');
   togglePopup(popupPlace);
 }
 
 
 //Действия при нажатии на картинку карточки
 function handleOpenImage (evt) {
-  let targetImage = evt.target;
-  let targetElement = evt.target.closest('.element');
+  const targetImage = evt.target;
+  const targetElement = evt.target.closest('.element');
   popupElementImage.setAttribute('src', targetImage.src);
   popupElementCaption.textContent = targetElement.querySelector('.element__text').textContent;
   togglePopup(popupElement);
