@@ -119,11 +119,7 @@ const addElement = newElement => {
 };
 
 
-<<<<<<< HEAD:scripts/main.js
-// Сброс форм в начальное состояние
-=======
 // Возврат всего в исходное состояние
->>>>>>> develop:scripts/index.js
 function makeAllToInitialState() {
   if(!casePopupOpened) {
     popupProfileForm.reset();
@@ -208,14 +204,10 @@ function handleEditProfile () {
 
 //Действия при нажатии на кнопку "Добавить" (Место)
 function handleAddPlace () {
-<<<<<<< HEAD:scripts/main.js
-=======
   caseAddPlace = true;
   const inputList = Array.from(popupPlaceForm.querySelectorAll('.popup__input'));
   const buttonElement = popupPlaceForm.querySelector('.popup__submit-button');
-  // debugger;
   toggleButtonState(inputList, buttonElement, settingsObject);
->>>>>>> develop:scripts/index.js
   togglePopup(popupPlace);
   document.addEventListener('keydown', handleKeyEscapeKeydown);
 }
