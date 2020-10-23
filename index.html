@@ -36,48 +36,6 @@
 
       <section class="elements elements_align_top-bottom">
         <ul class="elements__list">
-          <!-- <li class="element">
-            <img class="element__image" src="images/dolphins-282px.jpg" alt="два дельфина плывут по голубой воде">
-            <div class="element__text-container">
-              <h4 class="element__text">Дельфины</h4>
-              <button class="element__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/fish-hammer-282px.jpg" alt="рыба-молот, вид спереди, на глубине, под водой">
-            <div class="element__text-container">
-              <h4 class="element__text">Рыба молот</h4>
-              <button class="element__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/jelly-fish-282px.jpg" alt="стая медуз под водой">
-            <div class="element__text-container">
-              <h4 class="element__text">Медузы</h4>
-              <button class="element__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/sea-turtle-282px.jpg" alt="морская черепаха плывет под водой">
-            <div class="element__text-container">
-              <h4 class="element__text">Морская черепаха</h4>
-              <button class="element__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/shoreline-282px.jpg" alt="береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы">
-            <div class="element__text-container">
-              <h4 class="element__text">Береговая линия</h4>
-              <button class="element__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__image" src="images/snorkel-trip-282px.jpg" alt="Стая акул плывет под водой">
-            <div class="element__text-container">
-              <h4 class="element__text">Стая акул</h4>
-              <button class="element__icon" type="button"></button>
-            </div>
-          </li> -->
         </ul>
       </section>
 
@@ -93,10 +51,12 @@
     <div class="popup__container">
       <button class="popup__close-button popup__close-button_theme_profile" type="button"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" id="profile-info" name="profile-info">
+      <form class="popup__form" id="profile-info" name="profileinfo" novalidate>
         <fieldset class="popup__form-container">
-          <input class="popup__input popup__input_field_full-name" id="full-name" name="full-name" type="text">
-          <input class="popup__input popup__input_field_profession" id="profession" name="profession" type="text">
+          <input class="popup__input popup__input_field_full-name" id="full-name" name="fullname" type="text" minlength="2" maxlength="40" required>
+          <span class="popup__input-error popup__input-error_field_full-name" id="full-name-error"></span>
+          <input class="popup__input popup__input_field_profession" id="profession" name="profession" type="text" minlength="2" maxlength="200" required>
+          <span class="popup__input-error popup__input-error_field_profession" id="profession-error"></span>
         </fieldset>
         <button class="popup__submit-button popup__submit-button_theme_profile" type="submit">Сохранить</button>
       </form>
@@ -107,10 +67,12 @@
     <div class="popup__container">
       <button class="popup__close-button popup__close-button_theme_place" type="button"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" id="place-info" name="place-info">
+      <form class="popup__form" id="place-info" name="placeinfo" novalidate>
         <fieldset class="popup__form-container">
-          <input class="popup__input popup__input_field_place-title" id="place-title" name="place-title" type="text" placeholder="Название">
-          <input class="popup__input popup__input_field_link-to-image" id="link-to-image" name="link-to-image" type="text" placeholder="Ссылка на картинку">
+          <input class="popup__input popup__input_field_place-title" id="place-title" name="placetitle" type="text" placeholder="Название" minlength="2" maxlength="30" required>
+          <span class="popup__input-error popup__input-error_field_place-title" id="place-title-error"></span>
+          <input class="popup__input popup__input_field_link-to-image" id="link-to-image" name="linktoimage" type="url" placeholder="Ссылка на картинку" required>
+          <span class="popup__input-error popup__input-error_field_link-to-image" id="link-to-image-error"></span>
         </fieldset>
         <button class="popup__submit-button popup__submit-button_theme_place" type="submit">Сохранить</button>
       </form>
@@ -124,24 +86,7 @@
       <figcaption class='popup__caption'></figcaption>
     </figure>
   </div>
-
-  <!-- Урезанный попап - для создания разных вариантов -->
-  <!-- <div class="popup">
-    <div class="popup__container">
-      <button class="popup__close-button" type="button"></button>
-      <h3 class="popup__title"></h3>
-      <form class="popup__form">  
-        <fieldset class="popup__form-container">
-          <input class="popup__input" type="text">
-          <input class="popup__input" type="text">
-        </fieldset>
-        <button class="popup__submit-button" type="submit">Сохранить</button>
-      </form>
-    </div>
-  </div> -->
-
   
-
   <template id="template-element">
     <li class="element">
       <img class="element__image">
@@ -153,7 +98,8 @@
     </li>
   </template>
 
-  <script src="scripts/main.js"></script>
+  <script src="scripts/index.js"></script>
+  <script src="scripts/validate.js"></script>
 
 </body>
 

@@ -15,12 +15,12 @@ const docProfession = document.querySelector('.profile__profession');
 const popupProfile = document.querySelector('.popup_theme_profile');
 const popupPlace = document.querySelector('.popup_theme_place');
 const popupElement = document.querySelector('.popup_theme_image');
-const popupProfileForm = popupProfile.querySelector('.popup__form');
-const popupPlaceForm = popupPlace.querySelector('.popup__form');
-const popupProfileFormFullName = popupProfileForm.querySelector('.popup__input_field_full-name');
-const popupProfileFormProfession = popupProfileForm.querySelector('.popup__input_field_profession');
-const popupPlaceFormTitle = popupPlaceForm.querySelector('.popup__input_field_place-title');
-const popupPlaceFormLinkToImage = popupPlaceForm.querySelector('.popup__input_field_link-to-image');
+const popupProfileForm = document.forms.profileinfo;
+const popupPlaceForm = document.forms.placeinfo;
+const popupProfileFormFullName = popupProfileForm.elements.fullname;
+const popupProfileFormProfession = popupProfileForm.elements.profession;
+const popupPlaceFormTitle = popupPlaceForm.elements.placetitle;
+const popupPlaceFormLinkToImage = popupPlaceForm.elements.linktoimage;
 const popupProfileCloseButton = popupProfile.querySelector('.popup__close-button');
 const popupPlaceCloseButton = popupPlace.querySelector('.popup__close-button');
 const popupElementImage = popupElement.querySelector('.popup__image');
@@ -59,6 +59,8 @@ const objectsArr = [
 // Для проверки условий и выполнения условных ветвлений в функциях
 let casePopupOpened = false;
 let makeElementCounter = 0;
+let caseEditProfile = false;
+let caseAddPlace = false;
 
 
 //Для создания элемента-карточки с нужными атрибутами
@@ -117,11 +119,18 @@ const addElement = newElement => {
 };
 
 
+<<<<<<< HEAD:scripts/main.js
 // Сброс форм в начальное состояние
+=======
+// Возврат всего в исходное состояние
+>>>>>>> develop:scripts/index.js
 function makeAllToInitialState() {
   if(!casePopupOpened) {
     popupProfileForm.reset();
     popupPlaceForm.reset();
+    caseEditProfile = false;
+    caseAddPlace = false;
+    document.removeEventListener('keydown', handleKeyEscapeKeydown);
   }
 }
 
@@ -176,17 +185,39 @@ function handleLikeStatus(evt) {
 }
 
 
+//Действия при нажатии на кнопку "Esc"
+function handleKeyEscapeKeydown (evt) {
+  if(caseEditProfile && (evt.key === 'Escape')) {
+    togglePopup(popupProfile);
+  }
+  else if(caseAddPlace && (evt.key === 'Escape')) {
+    togglePopup(popupPlace);
+  };
+}
+
+
 //Действия при нажатии на кнопку "Изменить" (Профиль)
 function handleEditProfile () {
+  caseEditProfile = true;
   popupProfileFormFullName.value = docFullName.textContent;
   popupProfileFormProfession.value = docProfession.textContent;
   togglePopup(popupProfile);
+  document.addEventListener('keydown', handleKeyEscapeKeydown);
 }
 
 
 //Действия при нажатии на кнопку "Добавить" (Место)
 function handleAddPlace () {
+<<<<<<< HEAD:scripts/main.js
+=======
+  caseAddPlace = true;
+  const inputList = Array.from(popupPlaceForm.querySelectorAll('.popup__input'));
+  const buttonElement = popupPlaceForm.querySelector('.popup__submit-button');
+  // debugger;
+  toggleButtonState(inputList, buttonElement, settingsObject);
+>>>>>>> develop:scripts/index.js
   togglePopup(popupPlace);
+  document.addEventListener('keydown', handleKeyEscapeKeydown);
 }
 
 
