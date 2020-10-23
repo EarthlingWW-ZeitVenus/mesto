@@ -51,10 +51,12 @@
     <div class="popup__container">
       <button class="popup__close-button popup__close-button_theme_profile" type="button"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" id="profile-info" name="profile-info" novalidate>
+      <form class="popup__form" id="profile-info" name="profileinfo" novalidate>
         <fieldset class="popup__form-container">
-          <input class="popup__input popup__input_field_full-name" id="full-name" name="full-name" type="text" minlength="2" maxlength="40" required>
+          <input class="popup__input popup__input_field_full-name" id="full-name" name="fullname" type="text" minlength="2" maxlength="40" required>
+          <span class="popup__input-error popup__input-error_field_full-name" id="full-name-error"></span>
           <input class="popup__input popup__input_field_profession" id="profession" name="profession" type="text" minlength="2" maxlength="200" required>
+          <span class="popup__input-error popup__input-error_field_profession" id="profession-error"></span>
         </fieldset>
         <button class="popup__submit-button popup__submit-button_theme_profile" type="submit">Сохранить</button>
       </form>
@@ -65,10 +67,12 @@
     <div class="popup__container">
       <button class="popup__close-button popup__close-button_theme_place" type="button"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" id="place-info" name="place-info" novalidate>
+      <form class="popup__form" id="place-info" name="placeinfo" novalidate>
         <fieldset class="popup__form-container">
-          <input class="popup__input popup__input_field_place-title" id="place-title" name="place-title" type="text" placeholder="Название" minlength="2" maxlength="30" required>
-          <input class="popup__input popup__input_field_link-to-image" id="link-to-image" name="link-to-image" type="url" placeholder="Ссылка на картинку" required>
+          <input class="popup__input popup__input_field_place-title" id="place-title" name="placetitle" type="text" placeholder="Название" minlength="2" maxlength="30" required>
+          <span class="popup__input-error popup__input-error_field_place-title" id="place-title-error"></span>
+          <input class="popup__input popup__input_field_link-to-image" id="link-to-image" name="linktoimage" type="url" placeholder="Ссылка на картинку" required>
+          <span class="popup__input-error popup__input-error_field_link-to-image" id="link-to-image-error"></span>
         </fieldset>
         <button class="popup__submit-button popup__submit-button_theme_place" type="submit">Сохранить</button>
       </form>
