@@ -1,3 +1,4 @@
+//Объект настроек
 const settingsObject = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -7,6 +8,8 @@ const settingsObject = {
   errorClass: 'popup__input-error_active'
 }
 
+
+//Показывает красное поле и текст ошибки
 function showInputError(targetForm, targetInput, errorMessage, settingsObject) {
     const targetError = targetForm.querySelector(`#${targetInput.id}-error`);
     targetInput.classList.add(settingsObject.inputErrorClass);
@@ -14,6 +17,8 @@ function showInputError(targetForm, targetInput, errorMessage, settingsObject) {
     targetError.classList.add(settingsObject.errorClass);
 };
 
+
+//Скрывает красное поле и текст ошибки, удаляет оставшийся текст
 function hideInputError(targetForm, targetInput, settingsObject) {
     const targetError = targetForm.querySelector(`#${targetInput.id}-error`);
     targetInput.classList.remove(settingsObject.inputErrorClass);
@@ -21,6 +26,8 @@ function hideInputError(targetForm, targetInput, settingsObject) {
     targetError.textContent = '';
   };
 
+
+//Проверяет валидность поля
 function isValid(targetForm, targetInput, settingsObject) {
   if (!targetInput.validity.valid) {
     showInputError(targetForm, targetInput, targetInput.validationMessage, settingsObject);
@@ -29,12 +36,16 @@ function isValid(targetForm, targetInput, settingsObject) {
   }
 };
 
+
+//Проверяет все поля формы на валидность
 function hasInvalidInput(inputList) {
   return inputList.some(inputElement => {
     return !inputElement.validity.valid;
   })
 };
 
+
+//Меняет вид и состояние кнопки, в зависимости от валидности полей
 function toggleButtonState(inputList, targetButton, settingsObject) {
     if (hasInvalidInput(inputList)) {
       targetButton.classList.add(settingsObject.inactiveButtonClass);
@@ -44,8 +55,10 @@ function toggleButtonState(inputList, targetButton, settingsObject) {
       targetButton.classList.remove(settingsObject.inactiveButtonClass);
       targetButton.removeAttribute('disabled', '');
     }
-  }; 
+  };
 
+
+//Добавляет слушатели на все поля ввода формы
 function setEventListeners(targetForm, settingsObject) {
   const inputList = Array.from(targetForm.querySelectorAll(settingsObject.inputSelector));
   const buttonElement = targetForm.querySelector(settingsObject.submitButtonSelector);
@@ -57,6 +70,8 @@ function setEventListeners(targetForm, settingsObject) {
   });
 };
 
+
+//Отменяет стандартную процедуру "submit" у всех форм на странице, запускает процесс добавления слушателей для каждой найденной формы
 function enableValidation(settingsObject) {
   const formList = Array.from(document.forms);
   formList.forEach((formElement) => {
@@ -64,5 +79,6 @@ function enableValidation(settingsObject) {
     setEventListeners(formElement, settingsObject);
   });
 };
+
 
 enableValidation(settingsObject);
