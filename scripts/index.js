@@ -31,74 +31,49 @@ const elementsListContainer = document.querySelector('.elements__list');
 const objectsArr = [
   {
       name: 'Дельфины',
-      link: 'images/Dolphins.jpg'
+      link: 'images/Dolphins.jpg',
+      alt: 'два дельфина плывут по голубой воде'
   },
   {
       name: 'Рыба молот',
-      link: 'images/Hammerhead-fish.jpg'
+      link: 'images/Hammerhead-fish.jpg',
+      alt: 'рыба-молот, вид спереди, на глубине, под водой'
   },
   {
       name: 'Медузы',
-      link: 'images/Jelly-fish.jpg'
+      link: 'images/Jelly-fish.jpg',
+      alt: 'стая медуз под водой'
   },
   {
       name: 'Морская черепаха',
-      link: 'images/Sea-turtle.jpg'
+      link: 'images/Sea-turtle.jpg',
+      alt: 'морская черепаха плывет под водой'
   },
   {
       name: 'Береговая линия',
-      link: 'images/Shoreline.jpg'
+      link: 'images/Shoreline.jpg',
+      alt: 'береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы'
   },
   {
       name: 'Стая акул',
-      link: 'images/Snorkel-trip.jpg'
+      link: 'images/Snorkel-trip.jpg',
+      alt: 'Стая акул плывет под водой'
   }
 ];
-
-
-// Для проверки условий и выполнения условных ветвлений в функциях
-let casePopupOpened = false;
-let makeElementCounter = 0;
-let caseEditProfile = false;
-let caseAddPlace = false;
 
 
 //Для создания элемента-карточки с нужными атрибутами
 function makeElement(elementObject) {
   const listElement = document.querySelector('#template-element').content.cloneNode(true);
-  elementImage = listElement.querySelector('.element__image');
+  const elementImage = listElement.querySelector('.element__image');
   listElement.querySelector('.element__text').textContent = elementObject.name;
-  if (makeElementCounter < 6) {
-    switch(elementObject.name) {
-      case('Дельфины'):
-        elementImage.alt = 'два дельфина плывут по голубой воде';
-        break;
-      case('Рыба молот'):
-        elementImage.alt = 'рыба-молот, вид спереди, на глубине, под водой';
-        break;
-      case('Медузы'):
-        elementImage.alt = 'стая медуз под водой';
-        break;
-      case('Морская черепаха'):
-        elementImage.alt = 'морская черепаха плывет под водой';
-        break;
-      case('Береговая линия'):
-        elementImage.alt = 'береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы';
-        break;
-      case('Стая акул'):
-        elementImage.alt = 'Стая акул плывет под водой';
-    };
-  }
-  else {
-    elementImage.alt = elementObject.name;
-  };
+  elementImage.alt = elementObject.alt || elementObject.name;
   elementImage.setAttribute('src', elementObject.link);
-  elementLikeButton = listElement.querySelector('.element__like');
-  elementDeleteButton = listElement.querySelector('.element__delete');
+  const elementLikeButton = listElement.querySelector('.element__like');
+  const elementDeleteButton = listElement.querySelector('.element__delete');
   elementLikeButton.addEventListener('click', handleLikeStatus);
   elementDeleteButton.addEventListener('click', handleDeleteElement);
   elementImage.addEventListener('click', handleOpenImage);
-  makeElementCounter += 1;
   return listElement;
 }
 
@@ -119,31 +94,24 @@ const addElement = newElement => {
 };
 
 
-// Возврат всего в исходное состояние
-function makeAllToInitialState() {
-  if(!casePopupOpened) {
-    popupProfileForm.reset();
-    popupPlaceForm.reset();
-    caseEditProfile = false;
-    caseAddPlace = false;
-    document.removeEventListener('keydown', handleKeyEscapeKeydown);
-  }
+//Открытие всплывающего окна
+function openPopup(targetPopup) {
+  targetPopup.classList.add('popup_opened');
+  document.addEventListener('keydown', handleKeyEscapeKeydown);
 }
 
 
-//Закрытие и открытие текущего всплывающего окна
-function togglePopup(targetPopup) {
-  targetPopup.classList.toggle('popup_opened');
-  casePopupOpened = targetPopup.classList.contains('popup_opened');
-  if(!casePopupOpened)
-    setTimeout(makeAllToInitialState, 1000);
+//Закрытие всплывающего окна
+function closePopup(targetPopup) {
+  targetPopup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleKeyEscapeKeydown);
 }
 
 
 //Закрытия всплывающего окна по клику вне области окна
-function closePopup (evt) {
+function closePopupByClickOverlay(evt) {
   if(evt.target !== evt.currentTarget) return;
-  togglePopup(evt.currentTarget);
+  closePopup(evt.currentTarget);
 }
 
 
@@ -152,7 +120,7 @@ function submitEditProfile(evt) {
   evt.preventDefault();
   docFullName.textContent = popupProfileFormFullName.value;
   docProfession.textContent = popupProfileFormProfession.value;
-  togglePopup(popupProfile);
+  closePopup(popupProfile);
 }
 
 
@@ -165,7 +133,7 @@ function submitAddPlace(evt) {
   }
   const newElement = makeElement(elementObject);
   addElement(newElement);
-  togglePopup(popupPlace);
+  closePopup(popupPlace);
 }
 
 
@@ -183,33 +151,27 @@ function handleLikeStatus(evt) {
 
 //Действия при нажатии на кнопку "Esc"
 function handleKeyEscapeKeydown (evt) {
-  if(caseEditProfile && (evt.key === 'Escape')) {
-    togglePopup(popupProfile);
+  if(evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
-  else if(caseAddPlace && (evt.key === 'Escape')) {
-    togglePopup(popupPlace);
-  };
 }
 
 
 //Действия при нажатии на кнопку "Изменить" (Профиль)
 function handleEditProfile () {
-  caseEditProfile = true;
   popupProfileFormFullName.value = docFullName.textContent;
   popupProfileFormProfession.value = docProfession.textContent;
-  togglePopup(popupProfile);
-  document.addEventListener('keydown', handleKeyEscapeKeydown);
+  openPopup(popupProfile);
 }
 
 
 //Действия при нажатии на кнопку "Добавить" (Место)
 function handleAddPlace () {
-  caseAddPlace = true;
   const inputList = Array.from(popupPlaceForm.querySelectorAll('.popup__input'));
   const buttonElement = popupPlaceForm.querySelector('.popup__submit-button');
   toggleButtonState(inputList, buttonElement, settingsObject);
-  togglePopup(popupPlace);
-  document.addEventListener('keydown', handleKeyEscapeKeydown);
+  openPopup(popupPlace);
 }
 
 
@@ -219,25 +181,27 @@ function handleOpenImage (evt) {
   const targetElement = evt.target.closest('.element');
   popupElementImage.setAttribute('src', targetImage.src);
   popupElementCaption.textContent = targetElement.querySelector('.element__text').textContent;
-  togglePopup(popupElement);
+  openPopup(popupElement);
 }
 
 
 //Закрытие попап при клике на крестик (Профиль)
 function handleCloseProfile() {
-  togglePopup(popupProfile);
+  closePopup(popupProfile);
+  popupProfileForm.reset();
 }
 
 
 //Закрытие попап при клике на крестик (Место)
 function handleClosePlace() {
-  togglePopup(popupPlace);
+  closePopup(popupPlace);
+  popupPlaceForm.reset();
 }
 
 
 //Закрытие попап при клике на крестик (Картинка)
 function handleCloseImage() {
-  togglePopup(popupElement);
+  closePopup(popupElement);
 }
 
 
@@ -246,8 +210,8 @@ profileAddButton.addEventListener('click', handleAddPlace);
 popupProfileCloseButton.addEventListener('click', handleCloseProfile);
 popupPlaceCloseButton.addEventListener('click', handleClosePlace);
 popupElementImageCloseButton.addEventListener('click', handleCloseImage);
-popupProfile.addEventListener('click', closePopup);
-popupPlace.addEventListener('click', closePopup);
-popupElement.addEventListener('click', closePopup);
+popupProfile.addEventListener('click', closePopupByClickOverlay);
+popupPlace.addEventListener('click', closePopupByClickOverlay);
+popupElement.addEventListener('click', closePopupByClickOverlay);
 popupProfileForm.addEventListener('submit', submitEditProfile);
 popupPlaceForm.addEventListener('submit', submitAddPlace);
