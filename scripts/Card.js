@@ -38,7 +38,7 @@ export class Card {
     openPopup(popupElement);
   }
 
-  _setEventListeners () {
+  _setEventListeners() {
     this._elementLikeButton.addEventListener('click', evt => this._handleLikeStatus(evt));
     this._elementDeleteButton.addEventListener('click', evt => this._handleDeleteElement(evt));
     this._elementImage.addEventListener('click', evt => this._handleOpenImage(evt)); 
