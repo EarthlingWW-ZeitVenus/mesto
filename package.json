@@ -1,0 +1,19 @@
+{
+  "name": "yandex_praktikum",
+  "version": "0.0.1",
+  "description": "Учебный проект для совершенствования навыков веб-программирования. В этом проекте я использовал такие технологии и инструменты как:\r * Grid Layout\r * Flex\r * Запросы media\r * Псевдоэлемент ::before и псевдокласс :hover\r * JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EarthlingWW-ZeitVenus/mesto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EarthlingWW-ZeitVenus/mesto/issues"
+  },
+  "homepage": "https://github.com/EarthlingWW-ZeitVenus/mesto#readme"
+}
