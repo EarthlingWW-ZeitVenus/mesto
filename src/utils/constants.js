@@ -4,36 +4,42 @@ const popupProfileForm = document.forms.profileinfo;
 const popupProfileFormFullName = popupProfileForm.elements.fullname;
 const popupProfileFormProfession = popupProfileForm.elements.profession;
 const elementObject = {};
+import dolphinsImage from '../images/Dolphins.jpg';
+import hammerheadFishImage from '../images/Hammerhead-fish.jpg';
+import jellyFishImage from '../images/Jelly-fish.jpg';
+import seaTurtleImage from '../images/Sea-turtle.jpg';
+import shorelineImage from '../images/Shoreline.jpg';
+import snorkelTripImage from '../images/Snorkel-trip.jpg';
 
 const objectsArr = [
     {
       name: 'Дельфины',
-      link: 'images/Dolphins.jpg',
+      link: dolphinsImage,
       alt: 'два дельфина плывут по голубой воде'
     },
     {
       name: 'Рыба молот',
-      link: 'images/Hammerhead-fish.jpg',
+      link: hammerheadFishImage,
       alt: 'рыба-молот, вид спереди, на глубине, под водой'
     },
     {
       name: 'Медузы',
-      link: 'images/Jelly-fish.jpg',
+      link: jellyFishImage,
       alt: 'стая медуз под водой'
     },
     {
       name: 'Морская черепаха',
-      link: 'images/Sea-turtle.jpg',
+      link: seaTurtleImage,
       alt: 'морская черепаха плывет под водой'
     },
     {
       name: 'Береговая линия',
-      link: 'images/Shoreline.jpg',
+      link: shorelineImage,
       alt: 'береговая линия, рядом очертания берега, грота и морского прилива, вдали очертания мыса и кусок скалы'
     },
     {
       name: 'Стая акул',
-      link: 'images/Snorkel-trip.jpg',
+      link: snorkelTripImage,
       alt: 'Стая акул плывет под водой'
     }
   ];

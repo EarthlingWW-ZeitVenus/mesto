@@ -3,12 +3,15 @@
 //ToDo: Чеклист +
 //ToDo: Проверить, что поиск элементов не повторяется +
 //ToDo: Проверить, что объявления функций происходит до обращения к ним +
-//ToDo: Почитать все комментарии, выполнить те пункты, которые я пометил на выполнение
-//ToDo: Создать требуемую структуру папок для файлов-скриптов и переделать пути импортов, в соответствии с структурой
+//ToDo: Почитать все комментарии, выполнить те пункты, которые я пометил на выполнение +
+//ToDo: Создать требуемую структуру папок для файлов-скриптов и переделать пути импортов, в соответствии с структурой +
 //ToDo: Переделать экспорт на default +
+
+import './index.css';
 
 import { profileEditButton, profileAddButton, popupProfileFormFullName, popupProfileFormProfession,
   elementObject, objectsArr, cardData, validatorData, popupData } from '../utils/constants.js';
+
 
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';

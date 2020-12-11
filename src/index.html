@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="pages/index.css">
 </head>
 
 <body class="root">
@@ -13,14 +12,14 @@
   <div class="page page_content_paddings">
 
     <header class="header header_align_center">
-      <img class="logo" src="images/logo.svg" alt="логотип шапки сайта">
+      <img class="logo" src="<%=require('./images/logo.svg')%>" alt="логотип шапки сайта">
     </header>
 
     <main class="content">
       
       <section class="profile profile_align_top-center">
         <div class="profile__info-area">
-          <img class="profile__avatar" src="images/Avatar.jpg" alt="фотография лица мужчины, с красной шапочкой на голове">
+          <img class="profile__avatar" src="<%=require('./images/Avatar.jpg')%>" alt="фотография лица мужчины, с красной шапочкой на голове">
           <div class="profile__info">
             <div class="profile__info-container">
               <h1 class="profile__full-name">Жак-Ив Кусто</h1>
@@ -95,9 +94,6 @@
       </div>
     </li>
   </template>
-
-  <script src="pages/index.js" type="module"></script>
-  <!-- <script src="scripts/validate.js"></script> -->
 
 </body>
 
