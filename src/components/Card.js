@@ -1,5 +1,3 @@
-//ToDo: Проверить в конструкторе класса - какие переменные не используются - их удалить +
-
 export default class Card {
   constructor(elementData, cardData, handleCardClick) {
     this._text = elementData.name;
@@ -7,7 +5,7 @@ export default class Card {
     this._alt = elementData.alt;
     this._selector = cardData.templateSelector;
     this._cardData = cardData;
-    this._element = document.querySelector(cardData.templateSelector).content.cloneNode(true);
+    this._element = document.querySelector(cardData.templateSelector).content.querySelector('.element').cloneNode(true);
     this._elementImage = this._element.querySelector(cardData.imageSelector);
     this._elementText = this._element.querySelector(cardData.textSelector);
     this._elementLikeButton = this._element.querySelector(cardData.likeButtonSelector);
@@ -17,25 +15,25 @@ export default class Card {
 
 
   //Проставляет "лайк"-статус для картинки
-  _handleLikeStatus(evt) {
-    evt.target.classList.toggle(this._cardData.elementLikeActive);
+  _handleLikeStatus() {
+    this._elementLikeButton.classList.toggle(this._cardData.elementLikeActive);
   }
 
   //Удаляет карточку
-  _handleDeleteElement(evt) {
-    evt.target.closest(this._cardData.templateElement).remove();
+  _handleDeleteElement() {
+    this._element.remove();
   }
 
   //Открывает попап с картинкой
-  _handleOpenImage(evt) {
-    this._handleCardClick(evt);
+  _handleOpenImage(cardText, cardImage) {
+    this._handleCardClick(cardText, cardImage);
   }
 
   //Установка всех "слушателей-событий"
   _setEventListeners() {
-    this._elementLikeButton.addEventListener('click', evt => this._handleLikeStatus(evt));
-    this._elementDeleteButton.addEventListener('click', evt => this._handleDeleteElement(evt));
-    this._elementImage.addEventListener('click', evt => this._handleOpenImage(evt)); 
+    this._elementLikeButton.addEventListener('click', () => this._handleLikeStatus());
+    this._elementDeleteButton.addEventListener('click', () => this._handleDeleteElement());
+    this._elementImage.addEventListener('click', () => this._handleOpenImage(this._text, this._image)); 
   }
 
   //Наполняет разметку карточки данными и атрибутами, ставит "слушателей" и возвращает разметку

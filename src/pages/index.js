@@ -20,38 +20,27 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 
+const imagePopup = new PopupWithImage(cardData.popupThemeImage);
 
 //Обработчик "клика" по изображению карточки
-const handleCardClick = (evt) => {
-  const imagePopup = new PopupWithImage(cardData.popupThemeImage);
-  imagePopup.open(evt);
+const handleCardClick = (cardText, cardImage) => {
+  imagePopup.open(cardText, cardImage);
 };
 
-//В зависимости от типа принятых данных (массив или объект) создает либо массив объектов карточек, либо один объект
-// карточку, наполняет данными, возвращает разметку и вставляет в DOM, посредством объекта экземпляра класса Section
-const elementsRenderer = (objectOrArray) => {
-  if (Array.isArray(objectOrArray)) {
-    objectOrArray.forEach(item => {
-      const card = new Card(item, cardData, handleCardClick);
-      sectionForArray.addItem(card.generateCard());
-    });
-  }
-  else {
-    const card = new Card(objectOrArray, cardData, handleCardClick);
-    sectionForElement.addItem(card.generateCard());
-  }
+const sectionRenderer = (item) => {
+  const card = new Card(item, cardData, handleCardClick);
+  sectionForRenderAll.addItem(card.generateCard());
 };
 
-const sectionForArray = new Section({
+//ToReview: Добавление карточки с картинкой из интернет происходит то нормально, то с ошибкой загрузки. Пошагово дебагером
+// много раз проверил, проверил все значения, когда дебагером проверяю все нормально, все этапы выполняются и картинка
+// грузится, когда подгружаю в обычном режиме, без дебагера, картинка не грузится, а в поле src картинки вместо url стоит
+// unknown. Чего я только не пробовал... Голову уже сломал...  Грешу на глюки сервера и что его на каком-то этапе
+// переклинивает, посмотрите у себя, может это только у меня такое происходит, а у вас нормально грузится будет...
+
+const sectionForRenderAll = new Section({
   data: objectsArr,
-  renderer: elementsRenderer
-  },
-  cardData.containerSelector
-);
-
-const sectionForElement = new Section({
-  data: elementObject,
-  renderer: elementsRenderer
+  renderer: sectionRenderer
   },
   cardData.containerSelector
 );
@@ -70,12 +59,22 @@ const popupWithFormPlace = new PopupWithForm(popupData.popupPlace, {
   formSubmitHandler: (formInputs) => {
     elementObject.name = String(formInputs.placetitle);
     elementObject.link = String(formInputs.linktoimage);
-    elementsRenderer(elementObject); 
+    const card = new Card(elementObject, cardData, handleCardClick);
+    sectionForRenderAll.addItem(card.generateCard());
   }
 });
 
+//ToReview: Предварительное удаление сообщений об ошибках реализовал внутри метода enableValidation класса Validator,
+//чтоб не переделывать приватный метод на побличный, но могу сделать публичным и вынести наружу...
+
+//ToReview: Вы писали - Также в слушателе открытия формы карточки надо вызвать метод reset() формы, чтобы очистить
+//все её поля ввода.
+
+// - Так ведь у меня они очищаются при каждом закрытии формы-попапа (любым из методов закрытия), или надо ещё раз?
+
 //Действия при нажатии на кнопку "Изменить" (Профиль)
 function handleEditProfile () {
+  // debugger;
   popupProfileFormFullName.value = userInfo.getUserInfo().docProfileFullname;
   popupProfileFormProfession.value = userInfo.getUserInfo().docProfileProfession;
   validatorForProfile.enableValidation();
@@ -84,11 +83,12 @@ function handleEditProfile () {
 
 //Действия при нажатии на кнопку "Добавить" (Место)
 function handleAddPlace () {
+  // debugger;
   validatorForPlace.enableValidation();
   popupWithFormPlace.open();
 };
 
-sectionForArray.renderItems();
+sectionForRenderAll.renderItems();
 
 profileEditButton.addEventListener('click', handleEditProfile);
 profileAddButton.addEventListener('click', handleAddPlace);

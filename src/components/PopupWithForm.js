@@ -7,7 +7,7 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector('.popup__form');
     this._formInputsList = Array.from(this._form.querySelectorAll('.popup__input'));
     this._formInputsValues = {};
-    this.bindedHandleFormSubmit = this.handleFormSubmit.bind(this);
+    this._bindedHandleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
 
@@ -32,7 +32,8 @@ export default class PopupWithForm extends Popup {
 
   //Задействует функцию обработки события "сабмит", либо для попапа-формы с добавлением места, либо для попапа-формы
   //с редактированием профиля
-  handleFormSubmit(evt) {
+  _handleFormSubmit(evt) {
+    debugger;
     evt.preventDefault();
     this._formSubmitHandler(this._getInputValues());
     this.close();
@@ -40,13 +41,13 @@ export default class PopupWithForm extends Popup {
 
   //Установка всех слушателей
   setEventListeners() {
-    this._form.addEventListener('submit', this.bindedHandleFormSubmit);
+    this._form.addEventListener('submit', this._bindedHandleFormSubmit);
     super.setEventListeners();
   }
 
   //Удаление всех слушателей
   removeEventListeners() {
-    this._form.removeEventListener('submit', this.bindedHandleFormSubmit);
+    this._form.removeEventListener('submit', this._bindedHandleFormSubmit);
     super.removeEventListeners();
   }
 

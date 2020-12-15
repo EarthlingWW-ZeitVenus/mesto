@@ -9,11 +9,9 @@ export default class PopupWithImage extends Popup {
 
   
   //Открывает попап с картинкой
-  open(evt) {
-    const targetImage = evt.target;
-    const targetElement = evt.target.closest('.element');
-    this._popupElementImage.setAttribute('src', targetImage.src);
-    this._popupImageCaption.textContent = targetElement.querySelector('.element__text').textContent;
+  open(cardText, cardImage) {
+    this._popupElementImage.setAttribute('src', cardImage);
+    this._popupImageCaption.textContent = cardText;
     super.open();
   }
 }

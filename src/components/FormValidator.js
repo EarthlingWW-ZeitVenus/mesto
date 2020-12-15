@@ -43,11 +43,11 @@ export default class FormValidator {
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._validatorData.inactiveButtonClass);
-      this._buttonElement.setAttribute('disabled', '');
+      this._buttonElement.setAttribute('disabled', 'disabled');
     }
     else {
       this._buttonElement.classList.remove(this._validatorData.inactiveButtonClass);
-      this._buttonElement.removeAttribute('disabled', '');
+      this._buttonElement.removeAttribute('disabled');
     }
   }
 
@@ -63,6 +63,7 @@ export default class FormValidator {
 
   //Отменяет стандартную процедуру "submit" у всех форм на странице, запускает процесс добавления слушателей для каждой найденной формы
   enableValidation() {
+    this._inputList.forEach(inputElement => this._isValid(inputElement));
     this._toggleButtonState();
     this._setEventListeners();
   };
