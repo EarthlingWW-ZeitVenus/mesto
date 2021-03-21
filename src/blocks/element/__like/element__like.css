@@ -1,7 +1,9 @@
 .element__like {
   background-image: url(../../../images/Group.svg);
-  width: 20.76px;
-  height: 18.13px;
+  /* width: 20.76px; */
+  width: 22px;
+  /* height: 18.13px; */
+  height: 19px;
   border: none;
   padding: 0;
   cursor: pointer;

@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
+  <!-- <link rel="stylesheet" href="pages/index.css"> -->
 </head>
 
 <body class="root">
@@ -12,20 +13,26 @@
   <div class="page page_content_paddings">
 
     <header class="header header_align_center">
-      <img class="logo" src="<%=require('./images/logo.svg')%>" alt="логотип шапки сайта">
+      <!-- <img class="logo" src="./images/logo.svg" alt="логотип шапки сайта"></img> -->
+      <img class="logo" src="<%=require('./images/logo.svg')%>" alt="Логотип шапки сайта">
     </header>
 
     <main class="content">
       
       <section class="profile profile_align_top-center">
         <div class="profile__info-area">
-          <img class="profile__avatar" src="<%=require('./images/Avatar.jpg')%>" alt="фотография лица мужчины, с красной шапочкой на голове">
+          <div class="profile__avatar">
+            <div class="profile__overlay">
+              <!-- <img class="profile__edit-avatar" src="./images/Pencil-big.svg" alt="иконка с изображением карандаша"> -->
+              <img class="profile__edit-avatar" src="<%=require('./images/Pencil-big.svg')%>" alt="Иконка с изображением карандаша">
+            </div>
+          </div>
           <div class="profile__info">
             <div class="profile__info-container">
-              <h1 class="profile__full-name">Жак-Ив Кусто</h1>
+              <h1 class="profile__full-name"></h1>
               <button class="profile__edit-button" type="button"></button>
             </div>
-            <p class="profile__profession">Исследователь океана</p>
+            <p class="profile__profession"></p>
           </div>
         </div>
         <button class="profile__add-button" type="button"></button>
@@ -50,9 +57,9 @@
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="popup__form" id="profile-info" name="profileinfo" novalidate>
         <fieldset class="popup__form-container">
-          <input class="popup__input popup__input_field_full-name" id="full-name" name="fullname" type="text" minlength="2" maxlength="40" required>
+          <input class="popup__input popup__input_field_full-name" id="full-name" name="name" type="text" minlength="2" maxlength="40" required>
           <span class="popup__input-error popup__input-error_field_full-name" id="full-name-error"></span>
-          <input class="popup__input popup__input_field_profession" id="profession" name="profession" type="text" minlength="2" maxlength="200" required>
+          <input class="popup__input popup__input_field_profession" id="profession" name="about" type="text" minlength="2" maxlength="200" required>
           <span class="popup__input-error popup__input-error_field_profession" id="profession-error"></span>
         </fieldset>
         <button class="popup__submit-button popup__submit-button_theme_profile" type="submit">Сохранить</button>
@@ -84,16 +91,42 @@
     </figure>
   </div>
   
+  <div class="popup popup_theme_delete">
+    <div class="popup__container popup__container_theme_delete">
+      <button class="popup__close-button popup__close-button_theme_delete" type="button"></button>
+      <h3 class="popup__title popup__title_theme_delete">Вы уверены?</h3>
+      <form class="popup__form" id="confirm-delete" name="confirmdelete" novalidate>
+        <button class="popup__submit-button popup__submit-button_theme_delete" type="submit">Да</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_theme_avatar">
+    <div class="popup__container popup__container_theme_avatar">
+      <button class="popup__close-button popup__close-button_theme_avatar" type="button"></button>
+      <h3 class="popup__title popup__title_theme_avatar">Обновить аватар</h3>
+      <form class="popup__form" id="avatar-edit" name="avataredit" novalidate>
+        <input class="popup__input popup__input_field_link-to-avatar" id="link-to-avatar" name="linktoavatar" type="url" placeholder="Укажите ссылку на новый  аватар" required>
+        <button class="popup__submit-button popup__submit-button_theme_avatar" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
   <template id="template-element">
     <li class="element">
       <img class="element__image">
       <button class="element__delete" type="button"></button>
       <div class="element__text-container">
         <h4 class="element__text"></h4>
-        <button class="element__like" type="button"></button>
+        <div class="element__like-container">
+          <button class="element__like" type="button"></button>
+          <p class="element__like-number"></p>
+        </div>
       </div>
     </li>
   </template>
+
+<!-- <script src="pages/index.js" type="module"></script> -->
 
 </body>
 
