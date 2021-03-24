@@ -26,7 +26,6 @@ import './index.css';
 import { profileEditButton, profileAddButton, popupProfileFormFullName, popupProfileFormProfession,
   cardData, validatorData, popupData, apiData, profileAvatar } from '../utils/constants.js';
 
-
 import Api from '../components/Api.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -43,6 +42,32 @@ const userInfo = new UserInfo( {fullnameSelector:'.profile__full-name', professi
 const validatorForProfile = new FormValidator(validatorData, document.forms.profileinfo);
 const validatorForPlace = new FormValidator(validatorData, document.forms.placeinfo);
 
+function catchResponse(err) {
+  if(err.status) {
+    alert(`Сервер ответил ошибкой со статусом ${err.status}`)
+  }
+  else {
+    alert(`Ваш запрос не ушел на сервер или сервер не ответил, ошибка ${err}`)
+  };
+};
+
+function createCard(item) {
+  const card = new Card(item, cardData, callbacksForCard, userInfo.getUserInfo().profileId);
+  return card.generateCard();
+};
+
+//ToReview: У меня так и было сделано раньше (один экземпляр section все добавляет через метод addItem), но
+// предыдущий ревьюер (девушка), захотела чтоб массив добавлялся по другому и посоветовала сделать
+// еще один экземпляр класса, отдельно для массива. Мне в принципе все равно - могу туда вернуть... могу обратно...
+// могу динамически поменять функцию-колбэк как показали (кстати, спасибо), могу метод добавить...
+// Мне сам процесс нравится... Лишь бы работа была сдана в сроки...
+const section = new Section({
+  data: undefined,
+  renderer: undefined
+  },
+  cardData.containerSelector
+);
+
 const popupWithFormProfile = new PopupWithForm(popupData.popupProfile, {
   formSubmitHandler: (formInputs, thisObject) => {
     popupWithFormProfile.renderLoading(true, "Сохранение...");
@@ -50,11 +75,11 @@ const popupWithFormProfile = new PopupWithForm(popupData.popupProfile, {
     editProfileApi
     .then(res => {
       userInfo.setUserInfo(res);
+      thisObject.close();
     })
-    .catch(error => alert(error))
+    .catch(error => catchResponse(error))
     .finally(() => {
       popupWithFormProfile.renderLoading(false);
-      thisObject.close();
     });
   }
 });
@@ -64,18 +89,29 @@ const popupWithFormPlace = new PopupWithForm(popupData.popupPlace, {
     popupWithFormPlace.renderLoading(true, "Сохранение...");
     api.addCard(formInputs.placetitle, formInputs.linktoimage)
     .then(res => {
-      const card = new Card(res, cardData, callbacksForCard, userInfo.getUserInfo().profileId);
-      const sectionForElement = new Section({
-        data: undefined,
-        renderer: undefined
-        },
-        cardData.containerSelector
-        );
-      sectionForElement.addItem(card.generateCard());
+      section.addItem(createCard(res));
+      thisObject.close();
     })
+    .catch(error => catchResponse(error))
     .finally(() => {
       popupWithFormPlace.renderLoading(false);
+    });
+  }
+});
+
+const popupWithFormDelete = new PopupWithForm(popupData.popupDelete, {});
+
+const popupWithFormAvatar = new PopupWithForm(popupData.popupAvatar, {
+  formSubmitHandler: (inputValues, thisObject) => {
+    popupWithFormAvatar.renderLoading(true, "Сохранение...");
+    api.changeAvatar(inputValues.linktoavatar)
+    .then((res) => {
+      userInfo.setUserInfo(res);
       thisObject.close();
+    })
+    .catch(error => catchResponse(error))
+    .finally(() => {
+      popupWithFormAvatar.renderLoading(false);
     });
   }
 });
@@ -83,49 +119,33 @@ const popupWithFormPlace = new PopupWithForm(popupData.popupPlace, {
 //Объект содержащий колбеки для экземпляров класса Card
 const callbacksForCard = {
   handleDeleteCard: (thisCardObject) => {
-    const popupWithFormDelete = new PopupWithForm(popupData.popupDelete, {
-      formSubmitHandler: (undefined, thisPopupObject) => {
-        api.deleteCard(thisCardObject.cardId)
-        .then(() => {
-          thisCardObject.element.remove();
-        })
-        .catch((error) => {
-          alert(error);
-        })
-        .finally(() => {
-          thisPopupObject.close();
-        });
-      }
+    popupWithFormDelete.setSubmitHandler(() => {
+      api.deleteCard(thisCardObject.getCardInfo().cardId)
+      .then(() => {
+        thisCardObject.removeCard();
+        popupWithFormDelete.close();
+      })
+      .catch(error => catchResponse(error));
     });
     popupWithFormDelete.open();
   },
   handleImageOpen: (cardText, cardImage) => {
     imagePopup.open(cardText, cardImage);
   },
-  handleLikeStatus: (thisObject) => {
-    if(thisObject.haveUserLike) {
-      api.deleteLike(thisObject.cardId)
+  handleLikeStatus: (thisCardObject) => {
+    if(thisCardObject.getCardInfo().haveUserLike) {
+      api.deleteLike(thisCardObject.getCardInfo().cardId)
       .then((res) => {
-        thisObject.elementLikesNumber.textContent = res.likes.length;
-        thisObject.elementLikeButton.classList.remove(thisObject.cardData.elementLikeActive);
-        thisObject.likesNumber =  res.likes.length;
-        thisObject.haveUserLike = false;
+        thisCardObject.removeLike(res.likes.length);
       })
-      .catch((error) => {
-        alert(error);
-      });
+      .catch(error => catchResponse(error));
     }
     else {
-      api.addLike(thisObject.cardId)
+      api.addLike(thisCardObject.getCardInfo().cardId)
       .then((res) => {
-        thisObject.elementLikesNumber.textContent = res.likes.length;
-        thisObject.elementLikeButton.classList.add(thisObject.cardData.elementLikeActive);
-        thisObject.likesNumber =  res.likes.length;
-        thisObject.haveUserLike = true;
+        thisCardObject.addLike(res.likes.length);
       })
-      .catch((error) => {
-        alert(error);
-      });
+      .catch(error => catchResponse(error));
     }
   }  
 }
@@ -137,58 +157,37 @@ Promise.all( [profileInfoApi, objectsFromServerApi] )
     //Обработка первого элемента данных из массива данных, полученных от сервера
     userInfo.setUserInfo(results[0]);
     //Обработка второго элемента данных из массива данных, полученных от сервера
-    const sectionRendererForArray = (item) => {
-      const card = new Card(item, cardData, callbacksForCard, userInfo.getUserInfo().profileId);
-      sectionForArray.addArrayItem(card.generateCard());
-    };
-    const sectionForArray = new Section({
-      data: results[1],
-      renderer: sectionRendererForArray
-      },
-      cardData.containerSelector
-      );
-    sectionForArray.renderItems(); 
+    results[1].forEach(item => section.addItem(createCard(item)));
   })
-  .catch(error => {
-    alert(error);
-  });
+  .catch(error => catchResponse(error));
 
 //Действия при нажатии на кнопку "Изменить" (Профиль)
 function handleEditProfile() {
   popupProfileFormFullName.value = userInfo.getUserInfo().profileFullname;
   popupProfileFormProfession.value = userInfo.getUserInfo().profileProfession;
-  validatorForProfile.enableValidation();
+  validatorForProfile.intialValidation();
   popupWithFormProfile.open();
 };
 
 //Действия при нажатии на кнопку "Добавить" (Место)
 function handleAddPlace() {
-  validatorForPlace.enableValidation();
+  validatorForPlace.intialValidation();
   popupWithFormPlace.open();
 };
 
 //Действия при нажатии на иконку с аватаром
 function handleEditAvatar() {
-  const popupWithFormAvatar = new PopupWithForm(popupData.popupAvatar, {
-    formSubmitHandler: (inputValues, thisObject) => {
-      popupWithFormAvatar.renderLoading(true, "Сохранение...");
-      api.changeAvatar(inputValues.linktoavatar)
-      .then((res) => {
-        userInfo.setUserInfo(res);
-      })
-      .catch((error) => {
-        alert(error);
-      })
-      .finally(() => {
-        popupWithFormAvatar.renderLoading(false);
-        thisObject.close();
-      });
-    }
-  });
   popupWithFormAvatar.open();
 };
 
 
+validatorForProfile.enableValidation();
+validatorForPlace.enableValidation();
+imagePopup.setEventListeners();
+popupWithFormProfile.setEventListeners();
+popupWithFormPlace.setEventListeners();
+popupWithFormDelete.setEventListeners();
+popupWithFormAvatar.setEventListeners();
 profileEditButton.addEventListener('click', handleEditProfile);
 profileAddButton.addEventListener('click', handleAddPlace);
 profileAvatar.addEventListener('click', handleEditAvatar);

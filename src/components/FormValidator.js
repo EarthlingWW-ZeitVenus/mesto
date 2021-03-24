@@ -61,10 +61,17 @@ export default class FormValidator {
     });
   }
 
-  //Отменяет стандартную процедуру "submit" у всех форм на странице, запускает процесс добавления слушателей для каждой найденной формы
-  enableValidation() {
+  //Начальная предварительная валидация (без установки слушателей, для устранения возможности срабатывания кнопки
+  // "сабмита" при неправильных полях по умолчанию)
+  intialValidation() {
     this._inputList.forEach(inputElement => this._isValid(inputElement));
     this._toggleButtonState();
+  }
+
+  //Отменяет стандартную процедуру "submit" у всех форм на странице, запускает процесс добавления слушателей для
+  // каждой найденной формы
+  enableValidation() {
+    // this.intialValidation;
     this._setEventListeners();
   };
 

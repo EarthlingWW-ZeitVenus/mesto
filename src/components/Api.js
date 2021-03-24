@@ -1,4 +1,5 @@
 //ToDo: Вынести повторяющуюся логику методов в отдельную функцию +
+//ToDo: Всю обработку catch вынести наружу
 
 export default class Api {
   constructor(apiData) {
@@ -15,10 +16,10 @@ export default class Api {
   }
 
 //Обработка логики catch
-  _catchResponse(err) {
-    if(err.status) return Promise.reject(`Сервер ответил ошибкой со статусом ${err.status}`);
-    return Promise.reject(`Ваш запрос не ушел на сервер или сервер не ответил, ошибка ${err}`);
-  }
+  // _catchResponse(err) {
+  //   if(err.status) return Promise.reject(`Сервер ответил ошибкой со статусом ${err.status}`);
+  //   return Promise.reject(`Ваш запрос не ушел на сервер или сервер не ответил, ошибка ${err}`);
+  // }
 
 //Получить массив карточек с сервера
   getAllCards() {
@@ -27,8 +28,7 @@ export default class Api {
         "authorization": this._token,
       }
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
   //Добавление новой карточки на сервер
@@ -44,8 +44,7 @@ export default class Api {
         "link": cardLink
       })
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
   //Удаление карточки с сервера
@@ -56,8 +55,7 @@ export default class Api {
         "authorization": this._token,
       }
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
   addLike(cardId) {
@@ -67,8 +65,7 @@ export default class Api {
         "authorization": this._token,
       }
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
   deleteLike(cardId) {
@@ -78,8 +75,7 @@ export default class Api {
         "authorization": this._token,
       }
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
   //Получает с сервера информацию о пользователе
@@ -90,8 +86,7 @@ export default class Api {
         "content-type": "application/json"
       }
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
   //Редактирует на сервере информацию о пользователе
@@ -107,8 +102,7 @@ export default class Api {
         "about": profileAbout
       })
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
   //Меняет иконку аватара пользователя
@@ -123,8 +117,7 @@ export default class Api {
         "avatar": avatarUrl
       })
     })
-    .then(res => this._thenResponse(res))
-    .catch(err => this._catchResponse(err));
+    .then(res => this._thenResponse(res));
   }
 
 }

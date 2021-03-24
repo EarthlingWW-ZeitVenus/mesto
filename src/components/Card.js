@@ -2,24 +2,53 @@
 export default class Card {
   constructor(varData, constData, callbacksForCard, profileId) {
     this._cardVarData = varData;
-    this.likesNumber = this._cardVarData.likes.length;
+    this._likesNumber = this._cardVarData.likes.length;
     this._likesIdArray = this._cardVarData.likes.map((likeItem) => {return likeItem._id});
-    this.haveUserLike = this._likesIdArray.some((likeIdItem) => {return likeIdItem === profileId});
+    this._haveUserLike = this._likesIdArray.some((likeIdItem) => {return likeIdItem === profileId});
     this._text = this._cardVarData.name;
     this._image = this._cardVarData.link;
     this._alt = this._cardVarData.alt;
-    this.cardId = this._cardVarData._id;
+    this._cardId = this._cardVarData._id;
     this._cardOwnerId = this._cardVarData.owner._id;
     this._profileId = profileId;
     this._selector = constData.templateSelector;
-    this.cardData = constData;
-    this.element = document.querySelector(this._selector).content.querySelector('.element').cloneNode(true);
-    this._elementImage = this.element.querySelector(this.cardData.imageSelector);
-    this._elementText = this.element.querySelector(this.cardData.textSelector);
-    this.elementLikeButton = this.element.querySelector(this.cardData.likeButtonSelector);
-    this._elementDeleteButton = this.element.querySelector(this.cardData.deleteButtonSelector);
-    this.elementLikesNumber = this.element.querySelector(this.cardData.likesNumberSelector);
+    this._cardData = constData;
+    this._element = document.querySelector(this._selector).content.querySelector('.element').cloneNode(true);
+    this._elementImage = this._element.querySelector(this._cardData.imageSelector);
+    this._elementText = this._element.querySelector(this._cardData.textSelector);
+    this._elementLikeButton = this._element.querySelector(this._cardData.likeButtonSelector);
+    this._elementDeleteButton = this._element.querySelector(this._cardData.deleteButtonSelector);
+    this._elementLikesNumber = this._element.querySelector(this._cardData.likesNumberSelector);
     this._callbacksForCard = callbacksForCard;
+  }
+
+
+  getCardInfo() {
+    return {
+      cardId: this._cardId,
+      haveUserLike: this._haveUserLike
+      // cardElement: this._profession.textContent,
+      // profileAvatar: this._avatar.style.backgroundImage,
+      // profileId: this._profileId
+    };
+  }
+
+  removeCard() {
+    this._element.remove();
+  }
+
+  removeLike(likesNumber) {
+    this._elementLikesNumber.textContent = likesNumber;
+    this._elementLikeButton.classList.remove(this._cardData.elementLikeActive);
+    this._likesNumber =  likesNumber;
+    this._haveUserLike = false;
+  }
+
+  addLike(likesNumber) {
+    this._elementLikesNumber.textContent = likesNumber;
+    this._elementLikeButton.classList.add(this._cardData.elementLikeActive);
+    this._likesNumber =  likesNumber;
+    this._haveUserLike = true;
   }
 
 
@@ -40,7 +69,7 @@ export default class Card {
 
   //Установка всех "слушателей-событий"
   _setEventListeners() {
-    this.elementLikeButton.addEventListener('click', () => this._handleLikeStatus());
+    this._elementLikeButton.addEventListener('click', () => this._handleLikeStatus());
     this._elementDeleteButton.addEventListener('click', () => this._handleDeleteElement());
     this._elementImage.addEventListener('click', () => this._handleOpenImage(this._text, this._image)); 
   }
@@ -50,13 +79,13 @@ export default class Card {
     this._elementText.textContent = this._text;
     this._elementImage.alt = this._alt || this._text;
     this._elementImage.setAttribute('src', this._image);
-    this.elementLikesNumber.textContent = this.likesNumber;
+    this._elementLikesNumber.textContent = this._likesNumber;
     this._setEventListeners();
     if(this._cardOwnerId !== this._profileId)
       this._elementDeleteButton.remove();
-    if(this.haveUserLike)
-      this.elementLikeButton.classList.add(this.cardData.elementLikeActive);
-    return this.element;
+    if(this._haveUserLike)
+      this._elementLikeButton.classList.add(this._cardData.elementLikeActive);
+    return this._element;
   }
 
 }
