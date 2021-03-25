@@ -4,21 +4,21 @@ export default class Popup {
     this._popupCloseButton = this._popup.querySelector('.popup__close-button');
     // this._bindedClosePopupByClickOverlay = this._closePopupByClickOverlay.bind(this);
     // this.bindedClose = this.close.bind(this);
-    // this._bindedHandleKeyEscapeKeydown = this._handleKeyEscapeKeydown.bind(this);
+    this._bindedHandleKeyEscapeKeydown = this._handleKeyEscapeKeydown.bind(this);
   }
 
 
   //Открывает попап
   open() {
     this._popup.classList.add('popup_opened');
-    document.addEventListener('keydown', evt => this._handleKeyEscapeKeydown(evt));
+    document.addEventListener('keydown', this._bindedHandleKeyEscapeKeydown);
     // this.setEventListeners();
   }
 
   //Закрывает попап
   close() {
     this._popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', evt => this._handleKeyEscapeKeydown(evt));
+    document.removeEventListener('keydown', this._bindedHandleKeyEscapeKeydown);
     // this.removeEventListeners();
   }
 

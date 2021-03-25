@@ -23,20 +23,20 @@ export default class Card {
   }
 
 
+  //Получение необходимой информации о карточке
   getCardInfo() {
     return {
       cardId: this._cardId,
       haveUserLike: this._haveUserLike
-      // cardElement: this._profession.textContent,
-      // profileAvatar: this._avatar.style.backgroundImage,
-      // profileId: this._profileId
     };
   }
 
+  //Удаляет карточку из верстки
   removeCard() {
     this._element.remove();
   }
 
+  //Изменяет отображение и состояния лайка при удалении
   removeLike(likesNumber) {
     this._elementLikesNumber.textContent = likesNumber;
     this._elementLikeButton.classList.remove(this._cardData.elementLikeActive);
@@ -44,13 +44,13 @@ export default class Card {
     this._haveUserLike = false;
   }
 
+  //Изменяет отображение и состояния лайка при добавлении
   addLike(likesNumber) {
     this._elementLikesNumber.textContent = likesNumber;
     this._elementLikeButton.classList.add(this._cardData.elementLikeActive);
     this._likesNumber =  likesNumber;
     this._haveUserLike = true;
   }
-
 
   //Проставляет "лайк"-статус для картинки
   _handleLikeStatus() {
