@@ -21,4 +21,4 @@
 * Safari 10.1 ver.
 * Samsung Internet 6.2 ver.
 
- [Ссылка на опубликованный проект - Mesto](https://github.com/EarthlingWW-ZeitVenus/mesto)
+ [Ссылка на опубликованный проект - Mesto](https://earthlingww-zeitvenus.github.io/mesto/)
